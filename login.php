@@ -6,24 +6,61 @@
 		<link rel="stylesheet" href="./css/index.css">
 		<title>Log In</title>
 		<?php
-			$link = mysqli_connect('localhost', 'root', 'xliv11', 'demi');
-			if($link === false){
-				die("ERROR: Could not connect. " . mysqli_connect_error());
+			// connect to database
+			$link = new mysqli("localhost", "root", "xliv11", "demi");
+			if($link->connect_errno){
+				echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 			}
+
+			$firstNameErr = $passwordErr = "";
+            $firstName = $password = $failure = "";
+			$success = true;
+			// Form validation
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
-				echo "<h1>SHIT</h1>";
-				echo $_POST['submit'];
-				switch($_POST['submit']) {
-					case 'logIn':
-						echo "<h1>logIn</h1>";
-					break;
-					case 'signUp':
-						echo "<h1>signUp</h1>";
-					break;
-					default:
-						echo $_POST['submit'];
+				// First Name Validation
+				if (empty($_POST["firstName"])) {
+	            	$firstNameErr = "First Name is required";
+					$success = false;
+	            }else {
+	            	$firstName = sanatize($_POST["firstName"]);
+	            }
+				// Password Name Validation
+				if (empty($_POST["password"])) {
+	            	$passwordErr = "Password is required";
+					$success = false;
+	            }else {
+	            	$password = $_POST["password"];
+	            }
+
+				if($success){
+					// Form is valid
+					// Find this user
+					$res = $link->query("SELECT PASSWORD FROM accounts WHERE first LIKE '{$firstName}'");
+					if($res->num_rows > 0){
+						// This user exists
+						if(password_verify($password, $res->fetch_assoc()['PASSWORD'])){
+							// correct password
+							header('Location: index.html');
+							$link->close();
+							die();
+						}else{
+							// wrong password
+							$passwordErr = "Password is incorrect";
+						}
+					}else{
+						$firstNameErr = "This user doesn't exist";
+					}
 				}
 			}
+			$link->close();
+
+			// Removes illegal characters
+			function sanatize($data) {
+				$data = trim($data);
+				$data = stripslashes($data);
+				$data = htmlspecialchars($data);
+				return $data;
+        	}
 		?>
 	</head>
 	<body>
@@ -33,12 +70,15 @@
 		<!-- Log In -->
 		<form id="logIn" class="mt-5 col-3 mx-auto" action="login.php" method="post">
 			<h2 class="text-center mb-2">Log In</h2>
+			<h3 class="invalid-feedback d-block"><?php echo $failure;?></h3>
 			<div class="form-group">
 				<label for="firstName">First Name</label>
-				<input class="form-control" type="text" name="firsName" value="" required>
+				<h5 class="invalid-feedback d-block"><?php echo $firstNameErr;?></h5>
+				<input class="form-control" type="text" name="firstName" value="" required>
 			</div>
 			<div class="form-group">
 				<label for="password">Password</label>
+				<h5 class="invalid-feedback d-block"><?php echo $passwordErr;?></h5>
 				<input class="form-control" type="password" name="password" value="" required>
 			</div>
 			<button type="submit" value="logIn" class="btn btn-primary">Submit</button>

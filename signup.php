@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 		<link rel="stylesheet" href="./css/index.css">
-		<title>Log In</title>
+		<title>Sign Up</title>
 		<?php
 			// connect to database
 			$link = new mysqli("localhost", "root", "xliv11", "demi");
@@ -13,7 +13,7 @@
 			}
 
 			$firstNameErr = $lastNameErr = $passwordErr = $passwordConfirmErr = "";
-            $firstName = $lastName = $password = $passwordConfirm = "";
+            $firstName = $lastName = $password = $passwordConfirm = $failure = "";
 			$success = true;
 			// Form validation
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -36,7 +36,7 @@
 	            	$passwordErr = "Password is required";
 					$success = false;
 	            }else {
-	            	$password = sanatize($_POST["password"]);
+	            	$password = $_POST["password"];
 	            }
 				// Password Confirm Name Validation
 				if (empty($_POST["passwordConfirm"])) {
@@ -45,17 +45,26 @@
 	            }elseif(($_POST["passwordConfirm"]) != $password){
 					$passwordConfirmErr = "Password Confirm must match Password";
 					$success = false;
-				}else {
-	            	$passwordConfirm = sanatize($_POST["passwordConfirm"]);
-	            }
+				}
 
 				if($success){
 					// Form is valid
+					// Hash Password
+					$password = password_hash($password, PASSWORD_DEFAULT);
 					// Insert the new user
-					// Redirect
-
+					$res = $link->query("INSERT INTO accounts (first, last, password) VALUES ('{$firstName}','{$lastName}','{$password}')");
+					if($res){
+						// Successfully added new user
+						header('Location: index.html');
+						$link->close();
+						die();
+					}else{
+						// Failed to insert new user
+						$failure = "User Registration Failed. Please tell Shawnt.";
+					}
 				}
 			}
+			$link->close();
 
 			// Removes illegal characters
 			function sanatize($data) {
@@ -64,8 +73,6 @@
 				$data = htmlspecialchars($data);
 				return $data;
         	}
-
-			$link->close();
 		?>
 	</head>
 	<body>
@@ -75,6 +82,7 @@
 		<!-- Sign Up -->
 		<form id="signUp" class="mt-5 col-3 mx-auto" action="signup.php" method="post">
 			<h2 class="text-center mb-2">Sign Up</h2>
+			<h3 class="invalid-feedback d-block"><?php echo $failure;?></h3>
 			<div class="form-group">
 				<label for="firstName">First Name</label>
 				<h5 class="invalid-feedback d-block"><?php echo $firstNameErr;?></h5>
