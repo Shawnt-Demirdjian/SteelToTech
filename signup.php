@@ -6,6 +6,15 @@
 		<link rel="stylesheet" href="./css/index.css">
 		<title>Sign Up</title>
 		<?php
+			// start or resume session
+			session_start();
+
+			// redirect away if already logged in
+			if($_SESSION['userID'] > 0){
+				header('Location: index.php');
+				die();
+			}
+
 			// connect to database
 			$link = new mysqli("localhost", "root", "xliv11", "demi");
 			if($link->connect_errno){
@@ -55,7 +64,7 @@
 					$res = $link->query("INSERT INTO accounts (first, last, password) VALUES ('{$firstName}','{$lastName}','{$password}')");
 					if($res){
 						// Successfully added new user
-						header('Location: index.html');
+						header('Location: login.php');
 						$link->close();
 						die();
 					}else{

@@ -6,6 +6,15 @@
 		<link rel="stylesheet" href="./css/index.css">
 		<title>Log In</title>
 		<?php
+			// start or resume session
+			session_start();
+
+			// redirect away if already logged in
+			if($_SESSION['userID'] > 0){
+				header('Location: index.php');
+				die();
+			}
+
 			// connect to database
 			$link = new mysqli("localhost", "root", "xliv11", "demi");
 			if($link->connect_errno){
@@ -35,12 +44,14 @@
 				if($success){
 					// Form is valid
 					// Find this user
-					$res = $link->query("SELECT PASSWORD FROM accounts WHERE first LIKE '{$firstName}'");
+					$res = $link->query("SELECT PASSWORD , ID FROM accounts WHERE first LIKE '{$firstName}'");
+					$row = $res->fetch_assoc();
 					if($res->num_rows > 0){
 						// This user exists
-						if(password_verify($password, $res->fetch_assoc()['PASSWORD'])){
+						if(password_verify($password, $row['PASSWORD'])){
 							// correct password
-							header('Location: index.html');
+							$_SESSION['userID'] = $row['ID'];
+							header('Location: index.php');
 							$link->close();
 							die();
 						}else{
