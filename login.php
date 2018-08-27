@@ -18,7 +18,7 @@
 			}
 
 			// connect to database
-			$link = new mysqli("localhost", "root", "xliv11", "demi");
+			$link = new mysqli("localhost", "root", "xliv11", "steelt10_demi");
 			if($link->connect_errno){
 				echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 			}
