@@ -1,3 +1,72 @@
+<?php
+	// start or resume session
+	session_start();
+
+	// redirect away if already logged in
+	if($_SESSION['userID'] > 0){
+		header('Location: index.php');
+		die();
+	}
+
+	// connect to database
+	$link = new mysqli("localhost", "root", "xliv11", "steelt10_demi");
+	if($link->connect_errno){
+		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+
+	$emailErr = $passwordErr = "";
+	$email = $password = $failure = "";
+	$success = true;
+	// Form validation
+	if($_SERVER["REQUEST_METHOD"] == "POST"){
+		// Email Validation
+		if (empty($_POST["email"])) {
+			$emailErr = "Email is required";
+			$success = false;
+		}else {
+			$email = $_POST["email"];
+			// Sanitize Email
+			$email = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+			$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+			if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+				// Invalid Email
+				$emailErr = "Email is invalid";
+				$success = false;
+			}
+		}
+		
+		// Password Name Validation
+		if (empty($_POST["password"])) {
+			$passwordErr = "Password is required";
+			$success = false;
+		}else {
+			$password = $_POST["password"];
+		}
+
+		if($success){
+			// Form is valid
+			// Find this user
+			$res = $link->query("SELECT PASSWORD , ID FROM accounts WHERE email LIKE '{$email}'");
+			$row = $res->fetch_assoc();
+			if($res->num_rows > 0){
+				// This user exists
+				if(password_verify($password, $row['PASSWORD'])){
+					// correct password
+					$_SESSION['userID'] = $row['ID'];
+					header('Location: index.php');
+					$link->close();
+					die();
+				}else{
+					// wrong password
+					$passwordErr = "Password is incorrect";
+				}
+			}else{
+				$emailErr = "This user doesn't exist";
+			}
+		}
+	}
+	$link->close();
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
@@ -7,75 +76,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
 		<link rel="stylesheet" href="./css/index.css">
 		<title>Log In</title>
-		<?php
-			// start or resume session
-			session_start();
-
-			// redirect away if already logged in
-			if($_SESSION['userID'] > 0){
-				header('Location: index.php');
-				die();
-			}
-
-			// connect to database
-			$link = new mysqli("localhost", "root", "xliv11", "steelt10_demi");
-			if($link->connect_errno){
-				echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-			}
-
-			$emailErr = $passwordErr = "";
-            $email = $password = $failure = "";
-			$success = true;
-			// Form validation
-			if($_SERVER["REQUEST_METHOD"] == "POST"){
-				// Email Validation
-				if (empty($_POST["email"])) {
-	            	$emailErr = "Email is required";
-					$success = false;
-	            }else {
-					$email = $_POST["email"];
-					// Sanitize Email
-					$email = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-					$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-					if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-						// Invalid Email
-						$emailErr = "Email is invalid";
-						$success = false;
-					}
-				}
-				
-				// Password Name Validation
-				if (empty($_POST["password"])) {
-	            	$passwordErr = "Password is required";
-					$success = false;
-	            }else {
-	            	$password = $_POST["password"];
-	            }
-
-				if($success){
-					// Form is valid
-					// Find this user
-					$res = $link->query("SELECT PASSWORD , ID FROM accounts WHERE email LIKE '{$email}'");
-					$row = $res->fetch_assoc();
-					if($res->num_rows > 0){
-						// This user exists
-						if(password_verify($password, $row['PASSWORD'])){
-							// correct password
-							$_SESSION['userID'] = $row['ID'];
-							header('Location: index.php');
-							$link->close();
-							die();
-						}else{
-							// wrong password
-							$passwordErr = "Password is incorrect";
-						}
-					}else{
-						$emailErr = "This user doesn't exist";
-					}
-				}
-			}
-			$link->close();
-		?>
+		
 	</head>
 	<body class="container">
 		<h1 class="text-center mt-5">Demirdjian Family Archives</h1>

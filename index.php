@@ -1,4 +1,6 @@
-
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +10,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
 	<link rel="stylesheet" href="./css/index.css">
 	<title>Demirdjian Family Archives</title>
-	<?php
-		session_start();
-	?>
 </head>
 <body class="container">
 	<h1 class="text-center mt-5">Demirdjian Family Archives</h1>
