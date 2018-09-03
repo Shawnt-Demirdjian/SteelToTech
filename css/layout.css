@@ -1,0 +1,43 @@
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Forum', cursive;
+	background-color: #272727;
+	color: white;
+}
+
+.singlePageContainer {
+	flex: 1 0 auto;
+}
+
+.invalid-feedback {
+	font-size: 1.1em;
+}
+
+/* HEADER */
+nav {
+	flex-shrink: 0;
+	background-color: darkcyan;
+}
+
+/* FOOTER */
+footer {
+	flex-shrink: 0;
+	background-color: darkcyan;
+}
+
+footer a {
+	color: white;
+}
+
+footer a:hover {
+	color: white;
+}
