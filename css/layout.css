@@ -18,8 +18,17 @@ body {
 	flex: 1 0 auto;
 }
 
-.invalid-feedback {
+.invalid-feedback,
+.valid-feedback {
 	font-size: 1.1em;
+}
+
+.header-font {
+	font-family: 'Cinzel Decorative', cursive !important;
+}
+
+input {
+	font-family: Helvetica Narrow, sans-serif;
 }
 
 /* HEADER */

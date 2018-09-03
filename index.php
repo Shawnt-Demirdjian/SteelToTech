@@ -14,7 +14,7 @@
 </head>
 <body class="container">
 	<div class="singlePageContainer">
-		<h1 class="text-center mt-5">Demirdjian Family Archives</h1>
+		<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
 		<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 
 		<div class="d-flex justify-content-center my-4">

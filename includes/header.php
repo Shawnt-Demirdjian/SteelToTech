@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-dark">
-	<a class="navbar-brand" href="account.php">Hi, <?php echo $_SESSION['first'];?>!</a>
+	<a class="navbar-brand" href="/">Hi, <?php echo $_SESSION['first'];?>!</a>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
 	    aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">

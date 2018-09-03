@@ -14,11 +14,11 @@
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 
-	$firstNameErr = $lastNameErr = $passwordErr = $emailErr = $passwordConfirmErr = "";
-	$firstName = $lastName = $password = $email = $passwordConfirm = $failure = "";
-	$success = true;
 	// Form validation
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
+		$firstNameErr = $lastNameErr = $passwordErr = $emailErr = $passwordConfirmErr = "";
+		$firstName = $lastName = $password = $email = $passwordConfirm = $failure = "";
+		$success = true;
 		// First Name Validation
 		if (empty($_POST["firstName"])) {
 			$firstNameErr = "First Name is required";
@@ -83,7 +83,7 @@
 				die();
 			}else{
 				// Failed to insert new user
-				$failure = "User Registration Failed. Please tell Shawnt.";
+				$failure = "User registration failed. Please tell Shawnt.";
 			}
 		}
 	}
@@ -102,7 +102,7 @@
 	</head>
 	<body class="container">
 		<div class="singlePageContainer">
-			<h1 class="text-center mt-5">Demirdjian Family Archives</h1>
+			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Sign Up -->
 			<form id="signUp" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="signup.php" method="post">

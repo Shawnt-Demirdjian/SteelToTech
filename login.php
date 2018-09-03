@@ -14,11 +14,11 @@
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 
-	$emailErr = $passwordErr = "";
-	$email = $password = $failure = "";
-	$success = true;
 	// Form validation
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
+		$emailErr = $passwordErr = "";
+		$email = $password = $failure = "";
+		$success = true;
 		// Email Validation
 		if (empty($_POST["email"])) {
 			$emailErr = "Email is required";
@@ -84,7 +84,7 @@
 	</head>
 	<body class="container">
 		<div class="singlePageContainer">
-			<h1 class="text-center mt-5">Demirdjian Family Archives</h1>
+			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Log In -->
 			<form id="logIn" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="login.php" method="post">
