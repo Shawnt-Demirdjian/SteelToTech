@@ -22,8 +22,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="./css/layout.css">
+	<style>#search{color:white !important; text-decoration: underline;}</style>
 	<title>Search</title>
 </head>
 <body>

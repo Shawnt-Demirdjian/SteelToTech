@@ -9,16 +9,16 @@
 	<div class="collapse navbar-collapse" id="navbar">
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item">
-				<a class="nav-link" href="search.php">Search</a>
+				<a id="search" class="nav-link" href="search.php">Search</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="upload.php">Upload</a>
+				<a id="createAlbum" class="nav-link" href="createAlbum.php">Create Album</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="account.php">Account</a>
+				<a id="account" class="nav-link" href="account.php">Account</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="logout.php">Log Out</a>
+				<a id="logout" class="nav-link" href="logout.php">Log Out</a>
 			</li>
 		</ul>
 	</div>

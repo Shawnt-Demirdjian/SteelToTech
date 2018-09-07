@@ -138,8 +138,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="./css/layout.css">
+	<style>#account{color:white !important; text-decoration: underline;}</style>
 	<title>Account</title>
 </head>
 <body>
@@ -150,7 +151,7 @@
 		<h4 class="valid-feedback d-block text-center"><?php echo $successMessage;?></h4>
 		<h4 class="invalid-feedback d-block text-center"><?php echo $failMessage;?></h4>
 		<div class="row no-gutters">
-			<div class="col-12 col-md-6 mt-5">
+			<div class="col-12 col-md-6 mt-4 mb-5">
 				<h2 class="text-center">Account Information</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 				<form class="col-10 mx-auto" action="account.php" method="post">
@@ -169,10 +170,11 @@
 						<h4 class="invalid-feedback d-block"><?php echo $emailErr;?></h4>
 						<input class="form-control" type="email" name="email" value="<?php echo $_SESSION['email'];?>" required>
 					</div>
-					<button type="submit" value="update" name="submit" class="btn btn-info">Update</button>
+					<button type="reset" class="btn btn-danger">Reset</button>
+					<button type="submit" value="update" name="submit" class="btn btn-info float-right">Update</button>
 				</form>
 			</div>
-			<div class="col-12 col-md-6 my-5">
+			<div class="col-12 col-md-6 mt-4 mb-5">
 			<h2 class="text-center">Change Password</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 				<form class="col-10 mx-auto" action="account.php" method="post">
@@ -191,7 +193,8 @@
 						<h4 class="invalid-feedback d-block"><?php echo $passwordConfirmErr;?></h4>
 						<input class="form-control" type="password" name="passwordConfirm" value="" required>
 					</div>
-					<button type="submit" value="change" name="submit" class="btn btn-info">Change</button>
+					<button type="reset" class="btn btn-danger">Reset</button>
+					<button type="submit" value="change" name="submit" class="btn btn-info float-right">Change</button>
 				</form>
 			</div>
 		</div>

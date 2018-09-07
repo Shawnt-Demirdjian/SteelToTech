@@ -18,15 +18,6 @@ body {
 	flex: 1 0 auto;
 }
 
-.invalid-feedback,
-.valid-feedback {
-	font-size: 1.1em;
-}
-
-.header-font {
-	font-family: 'Cinzel Decorative', cursive !important;
-}
-
 input {
 	font-family: Helvetica Narrow, sans-serif;
 }
@@ -34,13 +25,26 @@ input {
 /* HEADER */
 nav {
 	flex-shrink: 0;
-	background-color: darkcyan;
+	background-color: steelblue;
+}
+
+.navbar-brand {
+	font-size: 1.5rem;
+}
+
+.nav-link {
+	color: rgba(255, 255, 255, 0.75) !important;
+	font-size: 1.1rem;
+}
+
+.nav-link:hover {
+	color: rgba(255, 255, 255, 1) !important;
 }
 
 /* FOOTER */
 footer {
 	flex-shrink: 0;
-	background-color: darkcyan;
+	background-color: steelblue;
 }
 
 footer a {
