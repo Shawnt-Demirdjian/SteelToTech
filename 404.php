@@ -23,14 +23,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
-	<link rel="stylesheet" href="./css/layout.css">
-	<style>#search{color:white !important; text-decoration: underline;}</style>
-	<title>Search</title>
+	<link rel="stylesheet" href="/css/layout.css">
+	<title>404</title>
 </head>
 <body>
 	<?php require 'includes/header.php';?>
 	<div class="singlePageContainer">
-		<h1 class="text-center mt-5">Search</h1>
+		<h1 class="text-center mt-5">Page Not Found</h1>
 	</div>
 	<?php require 'includes/footer.php';?>
 </body>

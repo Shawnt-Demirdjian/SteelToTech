@@ -20,10 +20,10 @@
 		<div class="d-flex justify-content-center my-4">
 			<?php if($_SESSION['userID'] > 0):?>
 				<!-- Display logout button only if already logged in -->
-				<a href="/logout.php" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Log Out</a>
-				<a href="/search.php" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Home</a>
+				<a href="/logout" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Log Out</a>
+				<a href="/search" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Home</a>
 			<?php else: ?>
-				<a href="/login.php" class="btn btn-info col-3 col-sm-2 col-md-2 col-lg-1">Log In</a>
+				<a href="/login" class="btn btn-info col-3 col-sm-2 col-md-2 col-lg-1">Log In</a>
 			<?php endif; ?>
 		</div>
 

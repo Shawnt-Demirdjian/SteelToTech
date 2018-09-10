@@ -4,7 +4,7 @@
 
 	// redirect away if not logged in
 	if($_SESSION['userID'] <= 0){
-		header('Location: index.php');
+		header('Location: /');
 		die();
 	}
 
@@ -154,7 +154,7 @@
 			<div class="col-12 col-md-6 mt-4 mb-5">
 				<h2 class="text-center">Account Information</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-				<form class="col-10 mx-auto" action="account.php" method="post">
+				<form class="col-10 mx-auto" action="/account" method="post">
 					<div class="form-group">
 						<label for="firstName">First Name</label>
 						<h4 class="invalid-feedback d-block"><?php echo $firstNameErr;?></h4>
@@ -177,7 +177,7 @@
 			<div class="col-12 col-md-6 mt-4 mb-5">
 			<h2 class="text-center">Change Password</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-				<form class="col-10 mx-auto" action="account.php" method="post">
+				<form class="col-10 mx-auto" action="/account" method="post">
 					<div class="form-group">
 						<label for="oldPassword">Old Password</label>
 						<h4 class="invalid-feedback d-block"><?php echo $oldPasswordErr;?></h4>

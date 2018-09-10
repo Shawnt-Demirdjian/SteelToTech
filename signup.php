@@ -4,7 +4,7 @@
 
 	// redirect away if already logged in
 	if($_SESSION['userID'] > 0){
-		header('Location: index.php');
+		header('Location: /');
 		die();
 	}
 
@@ -42,14 +42,21 @@
 			$emailErr = "Email is required";
 			$success = false;
 		}else {
-			$email = $_POST["email"];
-			// Sanitize Email
-			$email = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-			$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-			if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-				// Invalid Email
-				$emailErr = "Email is invalid";
+			$res = $link->query("SELECT * FROM accounts WHERE email LIKE '{$_POST["email"]}'");
+			if($res->num_rows > 0 ){
+				// Email Taken
 				$success = false;
+				$emailErr = "Email has been taken";
+			} else{
+				$email = $_POST["email"];
+				// Sanitize Email
+				$email = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+				$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+				if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+					// Invalid Email
+					$emailErr = "Email is invalid";
+					$success = false;
+				}
 			}
 		}
 
@@ -78,7 +85,7 @@
 			$res = $link->query("INSERT INTO accounts (first, last, email, password) VALUES ('{$firstName}','{$lastName}','{$email}','{$password}')");
 			if($res){
 				// Successfully added new user
-				header('Location: login.php');
+				header('Location: /login');
 				$link->close();
 				die();
 			}else{
@@ -105,7 +112,7 @@
 			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Sign Up -->
-			<form id="signUp" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="signup.php" method="post">
+			<form id="signUp" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="/signup" method="post">
 				<h2 class="text-center mb-2">Sign Up</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 				<h3 class="invalid-feedback d-block"><?php echo $failure;?></h3>

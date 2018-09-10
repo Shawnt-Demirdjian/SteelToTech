@@ -18,7 +18,8 @@ body {
 	flex: 1 0 auto;
 }
 
-input {
+input,
+textarea {
 	font-family: Helvetica Narrow, sans-serif;
 }
 

@@ -4,7 +4,7 @@
 
 	// redirect away if not logged in
 	if($_SESSION['userID'] <= 0){
-		header('Location: index.php');
+		header('Location: /');
 		die();
 	}
 
@@ -26,8 +26,15 @@
 			$titleErr = "Title is required";
 			$success = false;
 		}else {
-			$title = $_POST["title"];
-			$title = filter_var($title, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+			$res = $link->query("SELECT id FROM albums WHERE title LIKE '{$_POST["title"]}'");
+			if($res->num_rows > 0 ){
+				// Title Taken
+				$success = false;
+				$titleErr = "Title has been taken";
+			} else{
+				$title = $_POST["title"];
+				$title = filter_var($title, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+			}
 		}
 
 		// Location Validation
@@ -79,7 +86,7 @@
 		if($success){
 			// Form is Valid
 			// Create Album Entity
-			$res = $link->query("INSERT INTO albums (uploadDate, eventDate, creator, description, location, participants) VALUES ('{$uploadDate}','{$eventDate}','{$_SESSION['userID']}','{$description}','{$location}','{$participants}')");
+			$res = $link->query("INSERT INTO albums (uploadDate, eventDate, creator, title, description, location, participants) VALUES ('{$uploadDate}','{$eventDate}','{$_SESSION['userID']}', '{$title}', '{$description}','{$location}','{$participants}')");
 			if($res){
 				// successfully inserted Album
 				$newAlbumID = $link->insert_id;
@@ -92,10 +99,12 @@
 					// Move to /media
 					move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
 				}
+				header('Location: /album/'. urlencode($title));
+				$link->close();
+				die();
 			}else{
 				// failed to insert Album
 			}
-			// Create Media Entities
 		}
 	}
 	
@@ -109,7 +118,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="./css/layout.css">
-	<style>#createAlbum{color:white !important; text-decoration: underline;}</style>
+	<style>#create-album{color:white !important; text-decoration: underline;}</style>
 	<title>Create Album</title>
 </head>
 <body>
@@ -117,7 +126,7 @@
 	<div class="singlePageContainer">
 		<h1 class="text-center mt-4">Create Album</h1>
 		<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-		<form action="createAlbum.php" method="post" class="container-fluid my-5" enctype="multipart/form-data">
+		<form action="/create-album" method="post" class="container-fluid my-5" enctype="multipart/form-data">
 			<div class="row justify-content-center">
 				<div class="col-11 col-md-6 border border-white d-flex justify-content-center align-items-center">
 					<div class="form-group">
@@ -162,5 +171,8 @@
 		</form>
 	</div>
 	<?php require 'includes/footer.php';?>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 </body>
 </html>

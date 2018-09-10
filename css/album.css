@@ -1,0 +1,46 @@
+.carousel {
+	border: solid white 2px;
+	border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.048);
+}
+
+.carousel-control-prev {
+	width: 10%;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+1,000000+99&0.65+34,0+98 */
+	background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.65) 1%, rgba(0, 0, 0, 0.65) 34%, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0) 99%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.65) 1%, rgba(0, 0, 0, 0.65) 34%, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0) 99%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 1%, rgba(0, 0, 0, 0.65) 34%, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0) 99%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a6000000', endColorstr='#00000000', GradientType=1);
+	/* IE6-9 */
+}
+
+.carousel-control-next {
+	width: 10%;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+1,000000+99&0+2,0.65+66 */
+	background: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.65) 66%, rgba(0, 0, 0, 0.65) 99%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.65) 66%, rgba(0, 0, 0, 0.65) 99%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.65) 66%, rgba(0, 0, 0, 0.65) 99%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#a6000000', GradientType=1);
+	/* IE6-9 */
+}
+
+.carousel-inner {
+	height: 75vh;
+}
+
+.carousel-item {
+	height: 100%;
+	width: 100%;
+}
+
+video,
+img {
+	height: 100%;
+	width: auto;
+}

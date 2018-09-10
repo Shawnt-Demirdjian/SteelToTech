@@ -4,7 +4,7 @@
 
 	// redirect away if already logged in
 	if($_SESSION['userID'] > 0){
-		header('Location: index.php');
+		header('Location: /');
 		die();
 	}
 
@@ -56,7 +56,7 @@
 					$_SESSION['email'] = $row['email'];
 					$_SESSION['first'] = $row['first'];
 					$_SESSION['last'] = $row['last'];
-					header('Location: search.php');
+					header('Location: /');
 					$link->close();
 					die();
 				}else{
@@ -87,7 +87,7 @@
 			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Log In -->
-			<form id="logIn" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="login.php" method="post">
+			<form id="logIn" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="/login" method="post">
 				<h2 class="text-center mb-2">Log In</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 				<h3 class="invalid-feedback d-block"><?php echo $failure;?></h3>
