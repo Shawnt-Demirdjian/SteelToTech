@@ -2,3 +2,4 @@
 php.ini
 cgi-bin/
 media/
+config.php

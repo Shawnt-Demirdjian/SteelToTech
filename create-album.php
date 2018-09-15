@@ -8,8 +8,11 @@
 		die();
 	}
 
+	// Get Config File
+	include_once('./config.php');
+
 	// connect to database
-	$link = new mysqli("localhost", "root", "xliv11", "steelt10_demi");
+	$link = new mysqli("localhost", constant("user"), constant("password"), "steelt10_demi");
 	if($link->connect_errno){
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
