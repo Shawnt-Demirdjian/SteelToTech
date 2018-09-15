@@ -2,11 +2,18 @@
 # suphp_configpath /home/yourusername/path/to/php.ini
 # php_value mbstring.func_overload 4 # Required for PWSB support. Please do not uncomment this line.
 
-# Redirect HTTP -> HTTPS
+# Redirect HTTP www & non-www -> HTTPS non-www
 RewriteEngine On 
-RewriteCond %{HTTP_HOST} ^steeltotech\.com [NC]
+RewriteCond %{HTTP_HOST} ^(www\.)?steeltotech\.com [NC]
 RewriteCond %{SERVER_PORT} 80 
 RewriteRule ^(.*)$ https://steeltotech.com/$1 [R,L]
+
+# Redirect HTTPS www -> HTTPS non-www
+RewriteEngine On 
+RewriteCond %{HTTP_HOST} ^www\.steeltotech\.com [NC]
+RewriteCond %{SERVER_PORT} 443 
+RewriteRule ^(.*)$ https://steeltotech.com/$1 [R,L]
+
 
 # Disable Directory Browser
 Options All -Indexes
