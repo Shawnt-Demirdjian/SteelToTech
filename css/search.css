@@ -1,0 +1,20 @@
+/* Result Cards */
+
+#results {
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.card {
+	flex-basis: auto;
+	width: 20em;
+	height: 22.5em;
+}
+
+.card-title a {
+	color: #272727;
+}
+
+.card-subtitle {
+	color: #272727;
+}

@@ -16,8 +16,10 @@
 	if($link->connect_errno){
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-	
-	$link->close();
+
+	// Get 10 most recent albums
+	$res = $link->query("SELECT id, title, location, uploadDate FROM albums ORDER BY uploadDate DESC LIMIT 10");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,13 +29,39 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="./css/layout.css">
+	<link rel="stylesheet" href="./css/search.css">
 	<style>#search{color:white !important; text-decoration: underline;}</style>
 	<title>Search</title>
 </head>
 <body>
 	<?php require 'includes/header.php';?>
 	<div class="singlePageContainer">
-		<h1 class="text-center mt-5">Search</h1>
+		<h1 class="text-center mt-4">Search</h1>
+		<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto mb-5 bg-light">
+		<div class="container-fluid d-flex" id="results">
+			<?php
+			// Display 10 most recent albums
+			$curr;
+			for($i=$res->num_rows; $i>0; $i--){
+				$curr = $res->fetch_assoc();
+				$thumbName = $link->query("SELECT name from media WHERE parent={$curr['id']} ORDER BY uploadDate DESC LIMIT 1");
+				$thumbName = $thumbName->fetch_assoc();
+				echo
+				'<div class="">
+					<div class="card m-4">
+						<img class="card-img-top" src="/media/'.$thumbName["name"].'">
+						<div class="card-body">
+							<h3 class="card-title"><a href="/album/'.urlencode($curr["title"]).'">'.$curr["title"].'</a></h3>
+							<h5 class="card-subtitle">'.$curr["location"].'</h5>
+							<h5 class="card-subtitle">'.date("F jS, Y", strtotime($curr["uploadDate"])).'</h5>
+						</div>
+					</div>
+				</div>';
+			}
+
+			$link->close();
+			?>
+		</div>
 	</div>
 	<?php require 'includes/footer.php';?>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

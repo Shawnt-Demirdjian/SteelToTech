@@ -25,7 +25,7 @@
 			<?php else: ?>
 				<a href="/login" class="btn btn-info col-3 col-sm-2 col-md-2 col-lg-1">Log In</a>
 			<?php endif; ?>
-				<a href="https://steeltotech.com:2096" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Webmail</a>
+				<a href="https://steeltotech.com:2096" target="_blank" rel="noopener noreferrer" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Webmail</a>
 		</div>
 
 		<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light mt-4">
