@@ -32,5 +32,9 @@ ErrorDocument 404 /404.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^album\/(.*)$ album.php?title=$1 [NC,L]
 
+# Edit Album URL Parameters
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^edit-album\/(.*)$ edit-album.php?title=$1 [NC,L]
+
 # Remove .php
 RewriteRule ^([^\.]+)$ $1.php [NC]
