@@ -96,7 +96,7 @@
 				// Insert all Media
 				for($i= 0; $i < count($_FILES['media']['type']); $i++){
 					// Generate unique file name
-					$uniqueFileName = uniqid(bin2hex(random_bytes(5))) . basename($_FILES['media']['name'][$i]);
+					$uniqueFileName = preg_replace('/[^a-z0-9-_+A-Z.]+/', '-', uniqid(bin2hex(random_bytes(5))) . basename($_FILES['media']['name'][$i]));
 					// Insert into Database
 					$link->query("INSERT INTO media (uploader, uploadDate, parent, name) VALUES ('{$_SESSION['userID']}','{$uploadDate}','{$newAlbumID}','{$uniqueFileName}')");
 					// Move to /media
