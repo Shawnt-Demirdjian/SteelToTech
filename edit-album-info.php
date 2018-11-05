@@ -83,9 +83,7 @@
 			$resUpdate = $link->query("UPDATE albums SET title = '{$title}', location = '{$location}', participants = '{$participants}', description = '{$description}', eventDate = '{$eventDate}' WHERE title LIKE '{$_GET['title']}'");
 			if($resUpdate){
 				// Update Successful
-				header('Location: /album/'. urlencode($title));
-				$link->close();
-				die();
+				$successMessage = "Album update successful!";
 			}else{
 				// Update Failed
 				$failMessage = "Album update failed. Please tell Shawnt.";
@@ -128,8 +126,18 @@
 	<div class="singlePageContainer">
 		<?php if($exists):?>
 			<!-- The Album does exist -->
-			<div class="col-12 offset-md-3 col-md-6 my-5">
+			<div class="col-12 col-md-8 mx-auto my-5">
 				<h2 class="text-center">Album Information</h2>
+				<!-- Edit Album Buttons -->
+				<div class="d-flex justify-content-center btn-group">
+					<a href="/view-album/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">View Album</a>
+					<a href="/edit-album-media/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">Edit Album Media</a>
+				</div>
+				<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $success):?>
+					<h4 class="text-center valid-feedback d-block "><?php echo $successMessage;?></h4>
+				<?php elseif($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+					<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage;?></h4>
+				<?php endif; ?>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 				<h5 class="text-center"><?php echo $creator['first'] .' '. $creator['last'];?> | <?php echo date("F jS, Y", strtotime($row['uploadDate']));?></h5>
 				<form class="col-10 mx-auto row" action="" method="post">
@@ -156,7 +164,7 @@
 					<div class="form-group col-12">
 						<label for="description">Description</label>
 						<h4 class="invalid-feedback d-block"><?php echo $descriptionErr;?></h4>
-						<textarea class="form-control" name="description" required><?php echo $row['description'];?></textarea>
+						<textarea rows="5" class="form-control" name="description" required><?php echo $row['description'];?></textarea>
 					</div>
 					<div class="form-group col-12">
 						<button type="reset" class="btn btn-danger">Reset</button>

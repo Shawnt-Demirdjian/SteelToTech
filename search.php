@@ -51,7 +51,7 @@
 					<div class="card m-4">
 						<img class="card-img-top" src="/media/'.$thumbName["name"].'">
 						<div class="card-body">
-							<h3 class="card-title"><a href="/album/'.urlencode($curr["title"]).'">'.$curr["title"].'</a></h3>
+							<h3 class="card-title"><a href="/view-album/'.urlencode($curr["title"]).'">'.$curr["title"].'</a></h3>
 							<h5 class="card-subtitle">'.$curr["location"].'</h5>
 							<h5 class="card-subtitle">'.date("F jS, Y", strtotime($curr["uploadDate"])).'</h5>
 						</div>

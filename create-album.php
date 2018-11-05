@@ -102,7 +102,7 @@
 					// Move to /media
 					move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
 				}
-				header('Location: /album/'. urlencode($title));
+				header('Location: /view-album/'. urlencode($title));
 				$link->close();
 				die();
 			}else{

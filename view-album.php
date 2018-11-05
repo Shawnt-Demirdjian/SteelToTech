@@ -57,8 +57,13 @@
 					</div>
 					<div class="col-md-4 order-md-2 col-12 order-1 text-center">
 						<h1><?php echo $row['title'];?></h1>
-						<h5><?php echo $row['location'];?> | <?php echo date("F jS, Y", strtotime($row['eventDate']));?></h5>			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-						<h4 class="invalid-feedback d-block "><?php echo $failMessage;?></h4>
+						<h5><?php echo $row['location'];?> | <?php echo date("F jS, Y", strtotime($row['eventDate']));?></h5>
+						<!-- Edit Album Buttons -->
+						<div class="d-flex justify-content-center btn-group">
+							<a href="/edit-album-info/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">Edit Album Info</a>
+							<a href="/edit-album-media/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">Edit Album Media</a>
+						</div>	
+						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
 					<div class="mt-4 col-md-4 col-6 order-3 text-right">
 						<h5>Participants</h5>
@@ -83,10 +88,6 @@
 						?>
 					</div>
 				</div>
-			</div>
-			<!-- Edit Album Button -->
-			<div>
-				<a href="/edit-album/<?php echo urlencode($title);?>" class="btn btn-primary offset-10">Edit Album</a>
 			</div>
 		<?php else: ?>
 			<!-- The Album does not exist -->
