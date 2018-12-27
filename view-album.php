@@ -60,6 +60,7 @@
 						<h5><?php echo $row['location'];?> | <?php echo date("F jS, Y", strtotime($row['eventDate']));?></h5>
 						<!-- Edit Album Buttons -->
 						<div class="d-flex justify-content-center btn-group">
+							<a href="#" class="btn btn-sm btn-info">View Album</a>
 							<a href="/edit-album-info/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">Edit Album Info</a>
 							<a href="/edit-album-media/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">Edit Album Media</a>
 						</div>	
