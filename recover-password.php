@@ -56,10 +56,24 @@
 					// Send the email
 					$to = $row["name"]." <".$email.">";
 					$subject = "Password Recovery: Demirdjian Family Archives";
-					$message = "<h4>Please click link below to reset your password. This link will expire in an hour.</h4>";
-					$message .= "<br>";
-					$message .= "<a href='".$resetLink."'>".$resetLink."</a>";
-					$headers = [];
+
+					$message = "
+					<html>
+						<head>
+							<title>Password Recovery: Demirdjian Family Archives</title>
+						</head>
+						<body>
+							<h4>Please click link below to reset your password. This link will expire in an hour.</h4>
+							<br>
+							<a href='{$resetLink}'>{$resetLink}</a>
+						</body>
+					</html>
+					";
+
+					$headers = "MIME-Version: 1.0" . "\r\n";
+					$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+					$headers .= 'From: Demirdjian Family Archives <shawnt@steeltotech.com>' . "\r\n";
+
 					mail($to, $subject, $message, $headers);
 
 					$SucMessage = "If a user with that email exists, they have been sent an email with a link to reset their password.";
