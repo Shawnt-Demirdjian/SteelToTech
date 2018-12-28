@@ -21,10 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "del") {
 	// Delete Photos Form
 	$albumID = filter_var($_POST["albumID"], FILTER_VALIDATE_INT);
 	if($albumID){
-		foreach ($_POST as $value){
+		foreach ($_POST as $key => $value){
 			// sanitize value
 			$value = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-			if ($value != "del"){
+			if ($key != "submit" && $key != "albumID"){
 				// $value is the name of the file to be deleted.
 				$res = $link->query("DELETE FROM media WHERE name = '{$value}' AND parent= '{$albumID}' ");
 				unlink("media/".$value);
@@ -128,7 +128,7 @@ $link->close();
 									// Image Type
 									echo '<img class="img-fluid" src="/media/' . $currentMedia . '">';
 								}
-								echo '<input class="media-checkbox" name="' . $i . '" value="' . $currentMedia . '" type="checkbox">';
+								echo '<input class="media-checkbox" name="' . ($i+1) . '" value="' . $currentMedia . '" type="checkbox">';
 								echo '</div>';
 							}
 						?>
