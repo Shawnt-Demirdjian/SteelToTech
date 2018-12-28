@@ -11,3 +11,7 @@ body {
 .header-font {
 	font-family: 'Cinzel Decorative', cursive !important;
 }
+
+.forgot-link {
+	color: white !important;
+}

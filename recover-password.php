@@ -19,8 +19,8 @@
 
 	// Form validation
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
-		$emailErr = $passwordErr = "";
-		$email = $password = $failure = "";
+		$emailErr = "";
+		$email = "";
 		$success = true;
 		// Email Validation
 		if (empty($_POST["email"])) {
@@ -37,14 +37,6 @@
 				$success = false;
 			}
 		}
-		
-		// Password Validation
-		if (empty($_POST["password"])) {
-			$passwordErr = "Password is required";
-			$success = false;
-		}else {
-			$password = $_POST["password"];
-		}
 
 		if($success){
 			// Form is valid
@@ -53,21 +45,27 @@
 			$row = $res->fetch_assoc();
 			if($res->num_rows > 0){
 				// This user exists
-				if(password_verify($password, $row['password'])){
-					// correct password
-					$_SESSION['userID'] = $row['id'];
-					$_SESSION['email'] = $row['email'];
-					$_SESSION['first'] = $row['first'];
-					$_SESSION['last'] = $row['last'];
-					header('Location: /');
-					$link->close();
-					die();
+				// generate resetLink
+				$expire = date("\n Y-m-d-h-i", strtotime('1 hour'));
+				$code = bin2hex(random_bytes(10));
+				$resetLink = "https://steeltotech.com/reset-password/".$row["id"]."/".$code;
+				
+				// Store code and expire with user
+				$codeRes = $link->query("UPDATE accounts SET passResetCode = '{$code}', passResetExpire = '{$expire}' WHERE email LIKE '{$email}' ");
+				if($codeRes){
+					// Send the email
+					$to = $row["name"]." <".$email.">";
+					$subject = "Password Recovery: Demirdjian Family Archives";
+					$message = "<h4>Please click link below to reset your password. This link will expire in an hour.</h4>";
+					$message .= "<br>";
+					$message .= "<a href='".$resetLink."'>".$resetLink."</a>";
+					$headers = [];
+					mail($to, $subject, $message, $headers);
+
+					$SucMessage = "If a user with that email exists, they have been sent an email with a link to reset their password.";
 				}else{
-					// wrong password
-					$passwordErr = "Password is incorrect";
+					$emailErr = "Something went wrong. Contact Shawnt";
 				}
-			}else{
-				$emailErr = "This user doesn't exist";
 			}
 		}
 	}
@@ -82,30 +80,24 @@
 		<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
 		<link rel="stylesheet" href="./css/layout.css">
 		<link rel="stylesheet" href="./css/index.css">
-		<title>Log In</title>
+		<title>Recover Password</title>
 		
 	</head>
 	<body class="container">
 		<div class="singlePageContainer">
 			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-			<!-- Log In -->
-			<form id="logIn" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="/login" method="post">
-				<h2 class="text-center mb-2">Log In</h2>
+			<!-- Password Recover -->
+			<form id="logIn" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="" method="post">
+				<h2 class="text-center mb-2">Password Recovery</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-				<h3 class="invalid-feedback d-block"><?php echo $failure;?></h3>
+				<h3 class="valid-feedback d-block"><?php echo $SucMessage;?></h3>
 				<div class="form-group">
 					<label for="email">Email</label>
 					<h4 class="invalid-feedback d-block"><?php echo $emailErr;?></h4>
 					<input class="form-control" type="email" name="email" value="" required>
 				</div>
-				<div class="form-group">
-					<label for="password">Password</label>
-					<h4 class="invalid-feedback d-block"><?php echo $passwordErr;?></h4>
-					<input class="form-control" type="password" name="password" value="" required>
-					<a href="/recover-password" class="forgot-link">Forgot Password?</a>
-				</div>
-				<button type="submit" value="logIn" class="btn btn-info">Log In</button>
+				<button type="submit" value="logIn" class="btn btn-info">Recover</button>
 			</form>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
