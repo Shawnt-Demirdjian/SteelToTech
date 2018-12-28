@@ -48,7 +48,7 @@
 				// generate resetLink
 				$expire = date("\n Y-m-d-h-i", strtotime('1 hour'));
 				$code = bin2hex(random_bytes(10));
-				$resetLink = "https://steeltotech.com/reset-password/".$row["id"]."/".$code;
+				$resetLink = "https://steeltotech.com/reset-password?id=".$row["id"]."&code=".$code;
 				
 				// Store code and expire with user
 				$codeRes = $link->query("UPDATE accounts SET passResetCode = '{$code}', passResetExpire = '{$expire}' WHERE email LIKE '{$email}' ");
@@ -102,7 +102,7 @@
 			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Password Recover -->
-			<form id="logIn" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="" method="post">
+			<form class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="" method="post">
 				<h2 class="text-center mb-2">Password Recovery</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 				<h3 class="valid-feedback d-block"><?php echo $SucMessage;?></h3>
