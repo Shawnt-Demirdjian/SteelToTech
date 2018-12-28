@@ -17,7 +17,7 @@
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 
-	if($_SERVER["REQUEST_METHOD"] == "POST"){
+	if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "update"){
 		// Album Update
 		$titleErr = $descriptionErr = $eventDateErr = $locationErr = $participantsErr = "";
 		$title = $description = $eventDate = $location = $participants = "";
@@ -90,6 +90,25 @@
 				$failMessage = "Album update failed. Please tell Shawnt.";
 			}
 		}
+	}else if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "delete"){
+		$albumID = filter_var($_POST["albumID"], FILTER_VALIDATE_INT);
+		// delete all media files
+		$res = $link->query("SELECT name FROM media WHERE parent=".$albumID."");
+		if($res){
+			for($i=0; $i<$res->num_rows; $i++){
+				$row = $res->fetch_assoc();
+				unlink("media/".$row["name"]);
+			}
+			// delete album and cascades to all media. 
+			$res = $link->query("DELETE FROM albums WHERE id=".$albumID."");
+			if($res){
+				header('Location: /search');
+				$link->close();
+				die();
+			}
+		}
+		// one of the preview operations failed.
+		$deleteErr = "Album deletion failed. Contact Shawnt.";
 	}
 
 	// Check if this album exists
@@ -176,6 +195,15 @@
 					<div class="form-group col-12">
 						<button type="reset" class="btn btn-danger">Reset</button>
 						<button type="submit" value="update" name="submit" class="btn btn-info float-right">Update</button>
+					</div>
+				</form>
+				<form class="my-5 mx-auto row justify-content-center" action="" method="post">
+					<div class="form-group text-center">
+						<h3 class="col">Danger Below!</h3>
+						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
+						<h4 class="invalid-feedback d-block"><?php echo $deleteErr;?></h4>
+						<input class="d-none" type="number" name="albumID" value= "<?php echo $row['id']; ?>">
+						<button class="form-control btn btn-sm btn-danger col-12" type="submit" name="submit" value="delete">Delete Album</button>
 					</div>
 				</form>
 			</div>
