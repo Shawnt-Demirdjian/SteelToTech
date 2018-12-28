@@ -55,3 +55,22 @@ footer a {
 footer a:hover {
 	color: white;
 }
+
+/* MODALS */
+
+.modal-header {
+	background-color: steelblue;
+}
+
+.modal-body {
+	background-color: #272727;
+}
+
+.modal-footer {
+	background-color: steelblue;
+}
+
+.close {
+	color: white !important;
+	font-size: 2em;
+}

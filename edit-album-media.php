@@ -133,8 +133,33 @@ $link->close();
 							}
 						?>
 						<div class="form-group col-12">
-							<button type="submit" name="submit" value="del" class="btn btn-danger float-right">Delete Selected</button>
+							<button class="btn btn-danger float-right" type="button" data-toggle="modal" data-target="#delete-media-modal">Delete Selected</button>
 							<input class="d-none" type="number" name="albumID" value= "<?php echo $row['id']; ?>">
+						</div>
+						<!-- Delete Media Modal -->
+						<div class="modal fade" tabindex="-1" role="dialog" id="delete-media-modal">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Are You Sure?</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="mx-auto row justify-content-center">
+											<div class="form-group text-center">
+												<h3 class="col-12">This is NOT reversable!</h3>
+												<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
+												<button form="media" type="submit" name="submit" value="del" class="btn btn-danger col-6">Delete Selected</button>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>
