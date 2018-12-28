@@ -3,7 +3,7 @@
 	session_start();
 
 	// redirect away if not logged in
-	if($_SESSION['userID'] <= 0){
+	if(!isset($_SESSION['userID'])){
 		header('Location: /');
 		die();
 	}

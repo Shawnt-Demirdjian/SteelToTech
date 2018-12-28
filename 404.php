@@ -1,23 +1,6 @@
 <?php
 	// start or resume session
 	session_start();
-
-	// redirect away if not logged in
-	if($_SESSION['userID'] <= 0){
-		header('Location: /');
-		die();
-	}
-
-	// Get Config File
-	include_once('./config.php');
-
-	// connect to database
-	$link = new mysqli("localhost", constant("user"), constant("password"), "steelt10_demi");
-	if($link->connect_errno){
-		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-	}
-	
-	$link->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
