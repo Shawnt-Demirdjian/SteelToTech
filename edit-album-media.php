@@ -84,6 +84,7 @@ $link->close();
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="/css/layout.css">
 	<link rel="stylesheet" href="/css/view-album.css">
@@ -129,8 +130,12 @@ $link->close();
 										// echo '<video type="video/mp4" controls class="img-fluid" src="/media/' . $currentMedia . '"></video>';
 									} else {
 										// Image Type
-										echo '<div class="media-item">';
-										echo '<img class="album-image mb-4" src="/media/' . $currentMedia . '">';
+										echo '<div class="media-item text-center">';
+										echo '<div class="btn-group rotate-buttons" role="group">';
+										echo '<button type="button" class="btn btn-sm rotate-left-btn"><i class="fas fa-undo"></i></button>';
+										echo '<button type="button" class="btn btn-sm rotate-right-btn"><i class="fas fa-redo"></i></button>';
+										echo '<button type="button" class="btn btn-sm save-rotation"><i class="far fa-save"></i></button></div>';
+										echo '<img data-angle="0" class="album-image mb-4" src="/media/' . $currentMedia . '">';
 										echo '<input class="media-checkbox" name="' . ($nameIndex+1) . '" value="' . $currentMedia . '" type="checkbox">';
 										echo '</div>';
 									}								
@@ -206,5 +211,6 @@ $link->close();
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js" integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="/js/edit-album-media.js"></script>
 </body>
 </html>

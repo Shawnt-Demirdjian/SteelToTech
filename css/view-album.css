@@ -27,15 +27,40 @@
 
 .media-item {
 	position: relative;
+	min-width: 5.5em;
 	margin-left: 1em;
 	margin-right: 1em;
 	flex-basis: auto;
 	/* width: 20em; */
 }
 
+.rotate-buttons {
+	position: absolute;
+	right: 0;
+	z-index: 10;
+}
+
+.rotate-buttons button {
+	opacity: 0.7;
+	color: white;
+	padding: 0.2em;
+	background-color: rgb(92, 92, 92);
+}
+
+.rotate-buttons button:hover {
+	opacity: 1;
+}
+
+.save-success {
+	border: solid #00ff3c 3px;
+}
+
+.save-fail {
+	border: solid #ff0019 3px;
+}
+
 .media-checkbox {
 	position: absolute;
-	background-color: red;
 	left: 0;
 	width: 1.5em;
 	height: 1.5em;
