@@ -86,7 +86,7 @@ $link->close();
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="/css/layout.css">
-	<link rel="stylesheet" href="/css/edit-album-media.css">
+	<link rel="stylesheet" href="/css/view-album.css">
 	<title><?php echo $row['title']; ?></title>
 </head>
 <body>
@@ -113,25 +113,42 @@ $link->close();
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
 				</div>
-				<h3>Remove Pictures</h3>
-				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
 				<div class="row no-gutters justify-content-center">
-					<form class="col-12 d-flex" id="media" action="" method="post">
-						<?php
-							for ($i = 0; $i < $resMedia->num_rows; $i++) {
-								$currentMedia = $resMedia->fetch_assoc()["name"];
-								echo '<div class="media-item">';
-								if (preg_match("/video/", mime_content_type("./media/" . $currentMedia)) == 1) {
-									// Video Type
-									echo '<video type="video/mp4" controls class="img-fluid" src="/media/' . $currentMedia . '"></video>';
-								} else {
-									// Image Type
-									echo '<img class="img-fluid" src="/media/' . $currentMedia . '">';
+					<form action="" method="post" id="media">
+						<h3>Remove Pictures</h3>
+						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
+						<div class="form-group d-flex col-12 justify-content-center media-container">
+							<?php
+								$videos = array();
+								$nameIndex = 0;
+								for ($nameIndex; $nameIndex < $resMedia->num_rows; $nameIndex++) {
+									$currentMedia = $resMedia->fetch_assoc()["name"];								
+									if (preg_match("/video/", mime_content_type("./media/" . $currentMedia)) == 1) {
+										// Video Type
+										array_push($videos, $currentMedia);
+										// echo '<video type="video/mp4" controls class="img-fluid" src="/media/' . $currentMedia . '"></video>';
+									} else {
+										// Image Type
+										echo '<div class="media-item">';
+										echo '<img class="album-image mb-4" src="/media/' . $currentMedia . '">';
+										echo '<input class="media-checkbox" name="' . ($nameIndex+1) . '" value="' . $currentMedia . '" type="checkbox">';
+										echo '</div>';
+									}								
 								}
-								echo '<input class="media-checkbox" name="' . ($i+1) . '" value="' . $currentMedia . '" type="checkbox">';
-								echo '</div>';
-							}
-						?>
+							?>
+						</div>
+						<h3>Remove Videos</h3>
+						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
+						<div class="form-group d-flex col-12 justify-content-center media-container">
+							<?php
+								foreach ($videos as &$name){
+									echo '<div class="media-item">';
+									echo '<video type="video/mp4" controls class="album-video mb-5 align-middle " src="/media/' . $name . '"></video>';
+									echo '<input class="media-checkbox" name="' . (++$nameIndex) . '" value="' . $name . '" type="checkbox">';
+									echo '</div>';								
+								}
+							?>
+						</div>
 						<div class="form-group col-12">
 							<button class="btn btn-danger float-right" type="button" data-toggle="modal" data-target="#delete-media-modal">Delete Selected</button>
 							<input class="d-none" type="number" name="albumID" value= "<?php echo $row['id']; ?>">

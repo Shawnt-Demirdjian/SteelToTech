@@ -42,6 +42,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
 	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/view-album.css">
 	<title><?php echo $row['title'];?></title>
 </head>
 <body>
@@ -71,20 +72,35 @@
 						<p><?php echo $row['participants'];?></p>
 					</div>
 				</div>
+				<h3>Pictures</h3>
+				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
 				<div class="row no-gutters justify-content-center">
-					<div class="col-12 mb-5">
+					<div class="col-12 mb-5 text-center">
 						<?php
+							$videos = array();
 							for($i=0; $i < $resMedia->num_rows; $i++){
 								$currentMedia = $resMedia->fetch_assoc()["name"];
-								echo '<a href="/media/'.$currentMedia.'" data-fancybox="gallery">';
+								
 								if (preg_match("/video/",mime_content_type("./media/" . $currentMedia)) == 1){
 									// Video Type
-									echo '<video type="video/mp4" controls class="col-lg-2 col-md-4 col-sm-6 img-fluid" src="/media/'.$currentMedia.'">';
+									array_push($videos, $currentMedia);
 								}else{
 									// Image Type
-									echo '<img class="col-lg-2 col-md-4 col-sm-6 img-fluid" src="/media/'.$currentMedia.'">';
-								}
-								echo '</a>';
+									echo '<a class="" href="/media/'.$currentMedia.'" data-fancybox="gallery">';
+									echo '<img class="col-lg-2 col-md-4 col-sm-6 col-12 album-image mb-4" src="/media/'.$currentMedia.'">';
+									echo '</a>';
+								}								
+							}
+						?>
+					</div>
+				</div>
+				<h3>Videos</h3>
+				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
+				<div class="row no-gutters justify-content-center">
+					<div class="col-12 text-center">
+						<?php
+							foreach ($videos as &$name){
+								echo '<video type="video/mp4" controls class="align-middle col-lg-2 col-md-4 col-sm-6 col-12 album-video mb-5" src="/media/'.$name.'"></video>';
 							}
 						?>
 					</div>

@@ -1,0 +1,46 @@
+.album-image {
+	max-height: 7em;
+	width: auto;
+}
+
+.album-video {
+	max-height: 15em;
+	width: auto;
+}
+
+@media (max-width: 576px) {
+	.album-image {
+		max-height: unset;
+		width: 100% !important;
+		height: auto !important;
+	}
+
+	.album-video {
+		max-height: unset;
+		width: 100% !important;
+		height: auto !important;
+	}
+
+}
+
+/* EDIT ALBUM MEDIA */
+
+.media-item {
+	position: relative;
+	margin-left: 1em;
+	margin-right: 1em;
+	flex-basis: auto;
+	/* width: 20em; */
+}
+
+.media-checkbox {
+	position: absolute;
+	background-color: red;
+	left: 0;
+	width: 1.5em;
+	height: 1.5em;
+}
+
+.media-container {
+	flex-wrap: wrap;
+}
