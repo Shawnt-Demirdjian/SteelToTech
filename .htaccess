@@ -33,6 +33,12 @@ Options All -Indexes
     deny from all
 </files>
 
+# Cache Control for media
+# Checks for changes every time
+<FilesMatch "\.(?i:jpg|jpeg|png|gif|mov|mp4|mpeg|mpg|webm|webp)$">
+	FileETag MTime Size
+</FilesMatch>
+
 # Error Pages
 ErrorDocument 500 /500.php
 ErrorDocument 404 /404.php
