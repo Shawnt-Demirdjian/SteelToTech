@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "del") {
 				// $value is the name of the file to be deleted.
 				$res = $link->query("DELETE FROM media WHERE name = '{$value}' AND parent= '{$albumID}' ");
 				unlink("media/".$value);
+				unlink("thumbnails/".$value);
 			}
 		}
 	}
@@ -57,6 +58,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "del") {
 				$link->query("INSERT INTO media (uploader, uploadDate, parent, name) VALUES ('{$_SESSION['userID']}','{$uploadDate}','{$albumID}','{$uniqueFileName}')");
 				// Move to /media
 				move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
+
+				// Create thumbnail
+				$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
+				$resolution = getimagesize("media/" . $uniqueFileName);
+				// Scale thumbnail
+				if($resolution[0] > $resolution[1]){
+					// Landscape
+					$thumbnail = imagescale($thumbnail, 150);
+				}else{
+					// Portrait
+					$thumbnail = imagescale($thumbnail, 75);
+				}
+				// Save thumbnail
+				$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
 			}
 		}
 	}
@@ -135,7 +150,7 @@ $link->close();
 										echo '<button type="button" class="btn btn-sm rotate-left-btn"><i class="fas fa-undo"></i></button>';
 										echo '<button type="button" class="btn btn-sm rotate-right-btn"><i class="fas fa-redo"></i></button>';
 										echo '<button type="button" class="btn btn-sm save-rotation"><i class="far fa-save"></i></button></div>';
-										echo '<img data-angle="0" class="album-image mb-4" src="/media/' . $currentMedia . '">';
+										echo '<img data-angle="0" class="album-image mb-4" src="/thumbnails/' . $currentMedia . '">';
 										echo '<input class="media-checkbox" name="' . ($nameIndex+1) . '" value="' . $currentMedia . '" type="checkbox">';
 										echo '</div>';
 									}								

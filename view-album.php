@@ -87,7 +87,7 @@
 								}else{
 									// Image Type
 									echo '<a class="" href="/media/'.$currentMedia.'" data-fancybox="gallery">';
-									echo '<img class="col-lg-2 col-md-4 col-sm-6 col-12 album-image mb-4" src="/media/'.$currentMedia.'">';
+									echo '<img class="col-lg-2 col-md-4 col-sm-6 col-12 album-image mb-4" src="/thumbnails/'.$currentMedia.'">';
 									echo '</a>';
 								}								
 							}

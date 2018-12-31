@@ -98,6 +98,7 @@
 			for($i=0; $i<$res->num_rows; $i++){
 				$row = $res->fetch_assoc();
 				unlink("media/".$row["name"]);
+				unlink("thumbnails/".$row["name"]);
 			}
 			// delete album and cascades to all media. 
 			$res = $link->query("DELETE FROM albums WHERE id=".$albumID."");

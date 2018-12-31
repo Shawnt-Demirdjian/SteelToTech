@@ -101,6 +101,20 @@
 					$link->query("INSERT INTO media (uploader, uploadDate, parent, name) VALUES ('{$_SESSION['userID']}','{$uploadDate}','{$newAlbumID}','{$uniqueFileName}')");
 					// Move to /media
 					move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
+					
+					// Create thumbnail
+					$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
+					$resolution = getimagesize("media/" . $uniqueFileName);
+					// Scale thumbnail
+					if($resolution[0] > $resolution[1]){
+						// Landscape
+						$thumbnail = imagescale($thumbnail, 150);
+					}else{
+						// Portrait
+						$thumbnail = imagescale($thumbnail, 75);
+					}
+					// Save thumbnail
+					$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
 				}
 				header('Location: /view-album/'. urlencode($title));
 				$link->close();

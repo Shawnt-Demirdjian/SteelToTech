@@ -2,4 +2,5 @@
 php.ini
 cgi-bin/
 media/
+thumbnails/
 config.php

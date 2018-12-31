@@ -30,7 +30,7 @@ if((!$angle and gettype($angle) == "boolean") || !$filename){
 }
 
 // Remove front slash on file name
-$filename = ltrim($filename, "/");
+$filename = ltrim($filename, "/media/");
 
 // Flip angle to counterclockwise
 $angle *= -1;
@@ -38,15 +38,18 @@ $angle *= -1;
 // All is well, parameters are valid
 
 // Load the image
-$source = imagecreatefromjpeg($filename);
+$source = imagecreatefromjpeg("media/".$filename);
+$thumbSource = imagecreatefromjpeg("thumbnails/".$filename);
 
 // Rotate the image
 $rotate = imagerotate($source, $angle, 0);
+$thumbRotate = imagerotate($thumbSource, $angle, 0);
 
 // Overwrite old image
-$result = imagejpeg($rotate, $filename, 100);
+$result = imagejpeg($rotate, "media/".$filename , 100);
+$thumbResult = imagejpeg($thumbRotate, "thumbnails/".$filename , 100);
 
-if($result){
+if($result && $thumbResult){
 	http_response_code(200);
 	echo json_encode(["message" => "Image successfully rotated."]);
 }else{
