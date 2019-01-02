@@ -102,6 +102,7 @@ $link->close();
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/loading.css">
 	<link rel="stylesheet" href="/css/view-album.css">
 	<title><?php echo $row['title']; ?></title>
 </head>
@@ -203,7 +204,7 @@ $link->close();
 				<div>
 					<h3>Add Pictures</h3>
 					<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
-					<form action="" method="post" enctype="multipart/form-data">
+					<form class="useLoader" action="" method="post" enctype="multipart/form-data">
 						<div class="form-group my-5 d-flex justify-content-center align-items-center">
 							<div class="text-center border border-white py-1 mr-1">
 								<label for="media[]">Upload Media</label>
@@ -222,10 +223,18 @@ $link->close();
 			<h1 class="text-center mt-1">"<?php echo $title; ?>"</h1>
 		<?php endif;?>
 	</div>
+	<div id="loader-background"></div>
+	<div id="loader">
+		<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"></img>
+		<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"></img>
+		<h2 id="loader-message">Loading...</h2>
+	</div>
+
 	<?php require 'includes/footer.php';?>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js" integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<script src="/js/edit-album-media.js"></script>
+	<script src="/js/loading.js"></script>
 </body>
 </html>

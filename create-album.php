@@ -135,6 +135,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 	<link rel="stylesheet" href="./css/layout.css">
+	<link rel="stylesheet" href="/css/loading.css">
 	<style>#create-album{color:white !important; text-decoration: underline;}</style>
 	<title>Create Album</title>
 </head>
@@ -143,7 +144,7 @@
 	<div class="singlePageContainer">
 		<h1 class="text-center mt-4">Create Album</h1>
 		<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-		<form action="/create-album" method="post" class="container-fluid my-5" enctype="multipart/form-data">
+		<form action="/create-album" method="post" class="useLoader container-fluid my-5" enctype="multipart/form-data">
 			<div class="row justify-content-center">
 				<div class="col-11 col-md-6 border border-white d-flex justify-content-center align-items-center">
 					<div class="form-group">
@@ -187,9 +188,17 @@
 			</div>
 		</form>
 	</div>
+	<div id="loader-background"></div>
+	<div id="loader">
+		<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"></img>
+		<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"></img>
+		<h2 id="loader-message">Loading...</h2>
+	</div>
+
 	<?php require 'includes/footer.php';?>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js" integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="/js/loading.js"></script>
 </body>
 </html>
