@@ -82,16 +82,16 @@
 		<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
 		<link rel="stylesheet" href="./css/layout.css">
 		<link rel="stylesheet" href="./css/index.css">
-		<title>Log In</title>
+		<title>Login | Demirdjian Family Home</title>
 		
 	</head>
 	<body class="container">
 		<div class="singlePageContainer">
-			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
+			<h1 class="header-font text-center mt-5"><a href="/" class=" home-link">Demirdjian Family Home</a></h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Log In -->
 			<form id="logIn" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="/login" method="post">
-				<h2 class="text-center mb-2">Log In</h2>
+				<h2 class="text-center mb-2">Login</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 				<h3 class="invalid-feedback d-block"><?php echo $failure;?></h3>
 				<div class="form-group">

@@ -12,13 +12,13 @@
 				<a id="search" class="nav-link" href="/search">Search</a>
 			</li>
 			<li class="nav-item">
-				<a id="create-album" class="nav-link" href="/create-album">Create Album</a>
+				<a id="create-album" class="nav-link" href="/create-album">Create</a>
 			</li>
 			<li class="nav-item">
 				<a id="account" class="nav-link" href="/account">Account</a>
 			</li>
 			<li class="nav-item">
-				<a id="webmail" class="nav-link" href="https://steeltotech.com:2096" target="_blank" rel="noopener noreferrer">Webmail</a>
+				<a id="home" class="nav-link" href="/">Home</a>
 			</li>
 			<li class="nav-item">
 				<a id="logout" class="nav-link" href="/logout">Log Out</a>

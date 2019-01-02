@@ -85,12 +85,12 @@
 		<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
 		<link rel="stylesheet" href="./css/layout.css">
 		<link rel="stylesheet" href="./css/index.css">
-		<title>Reset Password</title>
+		<title>Reset Password | Demirdjian Family Home</title>
 		
 	</head>
 	<body class="container">
 		<div class="singlePageContainer">
-			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
+			<h1 class="header-font text-center mt-5"><a href="/" class=" home-link">Demirdjian Family Home</a></h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Password Reset -->
 			<?php if($valid):?>

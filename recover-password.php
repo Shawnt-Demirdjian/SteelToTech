@@ -55,12 +55,12 @@
 				if($codeRes){
 					// Send the email
 					$to = $row["name"]." <".$email.">";
-					$subject = "Password Recovery: Demirdjian Family Archives";
+					$subject = "Password Recovery: Demirdjian Family Home";
 
 					$message = "
 					<html>
 						<head>
-							<title>Password Recovery: Demirdjian Family Archives</title>
+							<title>Password Recovery: Demirdjian Family Home</title>
 						</head>
 						<body>
 							<h4>Please click link below to reset your password. This link will expire in an hour.</h4>
@@ -72,7 +72,7 @@
 
 					$headers = "MIME-Version: 1.0" . "\r\n";
 					$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-					$headers .= 'From: Demirdjian Family Archives <shawnt@steeltotech.com>' . "\r\n";
+					$headers .= 'From: Demirdjian Family Home <shawnt@steeltotech.com>' . "\r\n";
 
 					mail($to, $subject, $message, $headers);
 
@@ -94,12 +94,12 @@
 		<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
 		<link rel="stylesheet" href="./css/layout.css">
 		<link rel="stylesheet" href="./css/index.css">
-		<title>Recover Password</title>
+		<title>Recover Password | Demirdjian Family Home</title>
 		
 	</head>
 	<body class="container">
 		<div class="singlePageContainer">
-			<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
+			<h1 class="header-font text-center mt-5"><a href="/" class=" home-link">Demirdjian Family Home</a></h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 			<!-- Password Recover -->
 			<form class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="" method="post">

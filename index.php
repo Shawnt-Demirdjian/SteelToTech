@@ -10,20 +10,18 @@
 	<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Forum" rel="stylesheet">
 	<link rel="stylesheet" href="./css/layout.css">
 	<link rel="stylesheet" href="./css/index.css">
-	<title>Demirdjian Family Archives</title>
+	<title>Demirdjian Family Home</title>
 </head>
 <body class="container">
 	<div class="singlePageContainer">
-		<h1 class="header-font text-center mt-5">Demirdjian Family Archives</h1>
+		<h1 class="header-font text-center mt-5"><a href="/" class=" home-link">Demirdjian Family Home</a></h1>
 		<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 
 		<div class="d-flex justify-content-center my-4">
 			<?php if($_SESSION['userID'] > 0):?>
-				<!-- Display logout button only if already logged in -->
-				<a href="/logout" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Log Out</a>
-				<a href="/search" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Home</a>
+				<a href="/search" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>
 			<?php else: ?>
-				<a href="/login" class="btn btn-info col-3 col-sm-2 col-md-2 col-lg-1">Log In</a>
+				<a href="/login" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>
 			<?php endif; ?>
 				<a href="https://steeltotech.com:2096" target="_blank" rel="noopener noreferrer" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Webmail</a>
 		</div>

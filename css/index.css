@@ -15,3 +15,9 @@ body {
 .forgot-link {
 	color: white !important;
 }
+
+.home-link {
+	color: white !important;
+}
+
+.home-link:hover {}
