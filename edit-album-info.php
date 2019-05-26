@@ -84,7 +84,7 @@
 			if($resUpdate){
 				// Update Successful
 				$successMessage = "Album update successful!";
-				header('Location: /edit-album-info/'.$title);
+				header('Location: /edit-album-info/'. urlencode($title));
 			}else{
 				// Update Failed
 				$failMessage = "Album update failed. Please tell Shawnt.";
