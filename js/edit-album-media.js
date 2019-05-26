@@ -25,12 +25,12 @@ $(document).ready(function () {
 	$(".save-rotation").on('click', function () {
 		let img = $(this).parent(".btn-group").next("img");
 		let angle = Number.parseInt($(img).attr("data-angle"));
-		let filename = $(img).attr("src");
+		let filename = $(this).parents(".media-item").children(".media-checkbox").val()
 
 		$.post("/rotate-image", {
-				angle,
-				filename
-			})
+			angle,
+			filename
+		})
 			.done(function (data) {
 				$(img).addClass("save-success");
 			})

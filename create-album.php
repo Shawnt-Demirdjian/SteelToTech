@@ -79,7 +79,7 @@
 		// Media Validation
 		foreach($_FILES['media']['type'] as &$currType){
 			// Iterate through all uploaded media and check for bad extensions
-			if(preg_match('/image\/|video\//', $currType) != 1){
+			if(preg_match('/image\/jpeg|video\/mp4|video\/quicktime/', $currType) != 1){
 				// Incorrect Type
 				$success = false;
 				$mediaErr = "One or more of your files are not of the accepted file types.";
@@ -102,19 +102,21 @@
 					// Move to /media
 					move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
 					
-					// Create thumbnail
-					$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
-					$resolution = getimagesize("media/" . $uniqueFileName);
-					// Scale thumbnail
-					if($resolution[0] > $resolution[1]){
-						// Landscape
-						$thumbnail = imagescale($thumbnail, 150);
-					}else{
-						// Portrait
-						$thumbnail = imagescale($thumbnail, 75);
+					if(preg_match('/image\/jpeg/', $_FILES['media']['type'][$i]) == 1){
+						// Create thumbnail for JPEGS only (ignore videos)
+						$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
+						$resolution = getimagesize("media/" . $uniqueFileName);
+						// Scale thumbnail
+						if($resolution[0] > $resolution[1]){
+							// Landscape
+							$thumbnail = imagescale($thumbnail, 150);
+						}else{
+							// Portrait
+							$thumbnail = imagescale($thumbnail, 75);
+						}
+						// Save thumbnail
+						$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
 					}
-					// Save thumbnail
-					$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
 				}
 				header('Location: /view-album/'. urlencode($title));
 				$link->close();
@@ -129,76 +131,93 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
-	<link rel="stylesheet" href="./css/layout.css">
-	<link rel="stylesheet" href="/css/loading.css">
-	<style>#create-album{color:white !important; text-decoration: underline;}</style>
-	<title>Create Album</title>
-</head>
-<body>
-	<?php require 'includes/header.php';?>
-	<div class="singlePageContainer">
-		<h1 class="text-center mt-4">Create Album</h1>
-		<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-		<form action="/create-album" method="post" class="useLoader container-fluid my-5" enctype="multipart/form-data">
-			<div class="row justify-content-center">
-				<div class="col-11 col-md-6 border border-white d-flex justify-content-center align-items-center">
-					<div class="form-group">
-						<div class="text-center">
-							<label for="media[]">Upload Media</label>
-							<h4 class="invalid-feedback d-block"><?php echo $mediaErr;?></h4>
-							<input class="offset-2" type="file" name="media[]" accept="video/*,image/*" multiple>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+			crossorigin="anonymous" />
+		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
+		<link rel="stylesheet" href="./css/layout.css">
+		<link rel="stylesheet" href="/css/loading.css">
+		<style>
+		#create-album {
+			color: white !important;
+			text-decoration: underline;
+		}
+		</style>
+		<title>Create Album</title>
+	</head>
+
+	<body>
+		<?php require 'includes/header.php';?>
+		<div class="singlePageContainer">
+			<h1 class="text-center mt-4">Create Album</h1>
+			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
+			<form action="/create-album" method="post" class="useLoader container-fluid my-5"
+				enctype="multipart/form-data">
+				<div class="row justify-content-center">
+					<div class="col-11 col-md-6 border border-white d-flex justify-content-center align-items-center">
+						<div class="form-group">
+							<div class="text-center">
+								<label for="media[]">Upload Media</label>
+								<h4 class="invalid-feedback d-block"><?php echo $mediaErr;?></h4>
+								<input class="offset-2" type="file" name="media[]" accept=".jpeg, .jpg, .mov, .mp4"
+									multiple>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 mt-4 mt-md-0 row justify-content-center">
+						<div class="form-group col-12 col-sm-6">
+							<label for="title">Title</label>
+							<h4 class="invalid-feedback d-block"><?php echo $titleErr;?></h4>
+							<input class="form-control" type="text" name="title" required>
+						</div>
+						<div class="form-group col-12 col-sm-6">
+							<label for="eventDate">Event Date</label>
+							<h4 class="invalid-feedback d-block"><?php echo $eventDateErr;?></h4>
+							<input class="form-control" type="date" name="eventDate" required>
+						</div>
+						<div class="form-group col-12 col-sm-6">
+							<label for="location">Location</label>
+							<h4 class="invalid-feedback d-block"><?php echo $locationErr;?></h4>
+							<input class="form-control" type="text" name="location" required>
+						</div>
+						<div class="form-group col-12 col-sm-6">
+							<label for="participants">Participants</label>
+							<h4 class="invalid-feedback d-block"><?php echo $participantsErr;?></h4>
+							<input class="form-control" type="text" name="participants" required>
+						</div>
+						<div class="form-group col-12">
+							<label for="description">Description</label>
+							<h4 class="invalid-feedback d-block"><?php echo $descriptionErr;?></h4>
+							<textarea class="form-control" name="description" required></textarea>
+						</div>
+						<div class="form-group col-12">
+							<button type="submit" name="submit" class="btn btn-info float-right">Submit</button>
 						</div>
 					</div>
 				</div>
-				<div class="col-12 col-md-6 mt-4 mt-md-0 row justify-content-center">
-					<div class="form-group col-12 col-sm-6">
-						<label for="title">Title</label>
-						<h4 class="invalid-feedback d-block"><?php echo $titleErr;?></h4>
-						<input class="form-control" type="text" name="title" required>
-					</div>
-					<div class="form-group col-12 col-sm-6">
-						<label for="eventDate">Event Date</label>
-						<h4 class="invalid-feedback d-block"><?php echo $eventDateErr;?></h4>	
-						<input class="form-control" type="date" name="eventDate" required>
-					</div>
-					<div class="form-group col-12 col-sm-6">
-						<label for="location">Location</label>
-						<h4 class="invalid-feedback d-block"><?php echo $locationErr;?></h4>
-						<input class="form-control" type="text" name="location" required>
-					</div>
-					<div class="form-group col-12 col-sm-6">
-						<label for="participants">Participants</label>
-						<h4 class="invalid-feedback d-block"><?php echo $participantsErr;?></h4>
-						<input class="form-control" type="text" name="participants" required>
-					</div>
-					<div class="form-group col-12">
-						<label for="description">Description</label>
-						<h4 class="invalid-feedback d-block"><?php echo $descriptionErr;?></h4>
-						<textarea class="form-control" name="description" required></textarea>
-					</div>
-					<div class="form-group col-12">
-						<button type="submit" name="submit" class="btn btn-info float-right">Submit</button>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div id="loader-background"></div>
-	<div id="loader">
-		<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"></img>
-		<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"></img>
-		<h2 id="loader-message">Loading...</h2>
-	</div>
+			</form>
+		</div>
+		<div id="loader-background"></div>
+		<div id="loader">
+			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"></img>
+			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"></img>
+			<h2 id="loader-message">Loading...</h2>
+		</div>
 
-	<?php require 'includes/footer.php';?>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js" integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<script src="/js/loading.js"></script>
-</body>
+		<?php require 'includes/footer.php';?>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js"
+			integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+		</script>
+		<script src="/js/loading.js"></script>
+	</body>
+
 </html>

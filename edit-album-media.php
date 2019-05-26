@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "del") {
 		// Media Validation
 		foreach($_FILES['media']['type'] as &$currType){
 			// Iterate through all uploaded media and check for bad extensions
-			if(preg_match('/image\/|video\//', $currType) != 1){
+			if(preg_match('/image\/jpeg|video\/mp4|video\/quicktime/', $currType) != 1){
 				// Incorrect Type
 				$success = false;
 				$mediaErr = "One or more of your files are not of the accepted file types.";
@@ -59,19 +59,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "del") {
 				// Move to /media
 				move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
 
-				// Create thumbnail
-				$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
-				$resolution = getimagesize("media/" . $uniqueFileName);
-				// Scale thumbnail
-				if($resolution[0] > $resolution[1]){
-					// Landscape
-					$thumbnail = imagescale($thumbnail, 150);
-				}else{
-					// Portrait
-					$thumbnail = imagescale($thumbnail, 75);
+				if(preg_match('/image\/jpeg/', $_FILES['media']['type'][$i]) == 1){
+					// Create thumbnail for JPEGS only (ignore videos)
+					$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
+					$resolution = getimagesize("media/" . $uniqueFileName);
+					// Scale thumbnail
+					if($resolution[0] > $resolution[1]){
+						// Landscape
+						$thumbnail = imagescale($thumbnail, 150);
+					}else{
+						// Portrait
+						$thumbnail = imagescale($thumbnail, 75);
+					}
+					// Save thumbnail
+					$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
 				}
-				// Save thumbnail
-				$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
 			}
 		}
 	}
@@ -95,37 +97,46 @@ $link->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
-	<link rel="stylesheet" href="/css/layout.css">
-	<link rel="stylesheet" href="/css/loading.css">
-	<link rel="stylesheet" href="/css/view-album.css">
-	<title><?php echo $row['title']; ?></title>
-</head>
-<body>
-	<?php require 'includes/header.php';?>
-	<div class="singlePageContainer">
-		<?php if ($exists): ?>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+			crossorigin="anonymous" />
+		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+			integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
+		<link rel="stylesheet" href="/css/layout.css">
+		<link rel="stylesheet" href="/css/loading.css">
+		<link rel="stylesheet" href="/css/view-album.css">
+		<title><?php echo $row['title']; ?></title>
+	</head>
+
+	<body>
+		<?php require 'includes/header.php';?>
+		<div class="singlePageContainer">
+			<?php if ($exists): ?>
 			<!-- The Album does exist -->
 			<div class="container-fluid">
 				<div class="row justify-content-around mt-4">
 					<div class="text-center">
 						<h1><?php echo $row['title']; ?></h1>
-						<h5><?php echo $row['location']; ?> | <?php echo date("F jS, Y", strtotime($row['eventDate'])); ?></h5>
+						<h5><?php echo $row['location']; ?> |
+							<?php echo date("F jS, Y", strtotime($row['eventDate'])); ?></h5>
 						<!-- Edit Album Buttons -->
 						<div class="d-flex justify-content-center btn-group">
-							<a href="/view-album/<?php echo urlencode($title); ?>" class="btn btn-sm btn-outline-info">View Album</a>
-							<a href="/edit-album-info/<?php echo urlencode($title); ?>" class="btn btn-sm btn-outline-info">Edit Album Info</a>
+							<a href="/view-album/<?php echo urlencode($title); ?>"
+								class="btn btn-sm btn-outline-info">View Album</a>
+							<a href="/edit-album-info/<?php echo urlencode($title); ?>"
+								class="btn btn-sm btn-outline-info">Edit Album Info</a>
 							<a href="#" class="btn btn-sm btn-info">Edit Album Media</a>
 						</div>
 						<?php if ($_SERVER["REQUEST_METHOD"] == "POST" && $success): ?>
-							<h4 class="text-center valid-feedback d-block "><?php echo $successMessage; ?></h4>
+						<h4 class="text-center valid-feedback d-block "><?php echo $successMessage; ?></h4>
 						<?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-							<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage; ?></h4>
+						<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage; ?></h4>
 						<?php endif;?>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
@@ -171,8 +182,9 @@ $link->close();
 							?>
 						</div>
 						<div class="form-group col-12">
-							<button class="btn btn-danger float-right" type="button" data-toggle="modal" data-target="#delete-media-modal">Delete Selected</button>
-							<input class="d-none" type="number" name="albumID" value= "<?php echo $row['id']; ?>">
+							<button class="btn btn-danger float-right" type="button" data-toggle="modal"
+								data-target="#delete-media-modal">Delete Selected</button>
+							<input class="d-none" type="number" name="albumID" value="<?php echo $row['id']; ?>">
 						</div>
 						<!-- Delete Media Modal -->
 						<div class="modal fade" tabindex="-1" role="dialog" id="delete-media-modal">
@@ -181,7 +193,7 @@ $link->close();
 									<div class="modal-header">
 										<h5 class="modal-title">Are You Sure?</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
+											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<div class="modal-body">
@@ -189,12 +201,14 @@ $link->close();
 											<div class="form-group text-center">
 												<h3 class="col-12">This is NOT reversable!</h3>
 												<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-												<button form="media" type="submit" name="submit" value="del" class="btn btn-danger col-6">Delete Selected</button>
+												<button form="media" type="submit" name="submit" value="del"
+													class="btn btn-danger col-6">Delete Selected</button>
 											</div>
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-success"
+											data-dismiss="modal">Cancel</button>
 									</div>
 								</div>
 							</div>
@@ -209,32 +223,39 @@ $link->close();
 							<div class="text-center border border-white py-1 mr-1">
 								<label for="media[]">Upload Media</label>
 								<h4 class="invalid-feedback d-block"><?php echo $mediaErr; ?></h4>
-								<input class="offset-2" type="file" name="media[]" accept="video/*,image/*" multiple>
-								<input class="d-none" type="number" name="albumID" value= "<?php echo $row['id']; ?>">
+								<input class="offset-2" type="file" name="media[]" accept=".jpeg, .jpg, .mov, .mp4"
+									multiple>
+								<input class="d-none" type="number" name="albumID" value="<?php echo $row['id']; ?>">
 							</div>
-							<button type="submit" name="submit" value="add" class="btn btn-success ml-1">Add Pictures</button>
+							<button type="submit" name="submit" value="add" class="btn btn-success ml-1">Add
+								Pictures</button>
 						</div>
 					</form>
 				</div>
 			</div>
-		<?php else: ?>
+			<?php else: ?>
 			<!-- The Album does not exist -->
 			<h1 class="text-center mt-5">There is no album with the title</h1>
 			<h1 class="text-center mt-1">"<?php echo $title; ?>"</h1>
-		<?php endif;?>
-	</div>
-	<div id="loader-background"></div>
-	<div id="loader">
-		<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"></img>
-		<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"></img>
-		<h2 id="loader-message">Loading...</h2>
-	</div>
+			<?php endif;?>
+		</div>
+		<div id="loader-background"></div>
+		<div id="loader">
+			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"></img>
+			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"></img>
+			<h2 id="loader-message">Loading...</h2>
+		</div>
 
-	<?php require 'includes/footer.php';?>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js" integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<script src="/js/edit-album-media.js"></script>
-	<script src="/js/loading.js"></script>
-</body>
+		<?php require 'includes/footer.php';?>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js"
+			integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+		</script>
+		<script src="/js/edit-album-media.js"></script>
+		<script src="/js/loading.js"></script>
+	</body>
+
 </html>
