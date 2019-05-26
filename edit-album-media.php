@@ -143,7 +143,7 @@ $link->close();
 				</div>
 				<div class="row no-gutters justify-content-center">
 					<form action="" method="post" id="media">
-						<h3>Remove Pictures</h3>
+						<h3>Pictures</h3>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
 						<div class="form-group d-flex col-12 justify-content-center media-container">
 							<?php
@@ -169,7 +169,7 @@ $link->close();
 								}
 							?>
 						</div>
-						<h3>Remove Videos</h3>
+						<h3>Videos</h3>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
 						<div class="form-group d-flex col-12 justify-content-center media-container">
 							<?php
@@ -216,7 +216,7 @@ $link->close();
 					</form>
 				</div>
 				<div>
-					<h3>Add Pictures</h3>
+					<h3>Add Media</h3>
 					<hr class="col-3 col-sm-3 col-md-2 col-lg-1 bg-light ml-0">
 					<form class="useLoader" action="" method="post" enctype="multipart/form-data">
 						<div class="form-group my-5 d-flex justify-content-center align-items-center">
@@ -228,7 +228,7 @@ $link->close();
 								<input class="d-none" type="number" name="albumID" value="<?php echo $row['id']; ?>">
 							</div>
 							<button type="submit" name="submit" value="add" class="btn btn-success ml-1">Add
-								Pictures</button>
+								Media</button>
 						</div>
 					</form>
 				</div>
