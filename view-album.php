@@ -35,20 +35,26 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
-	<link rel="stylesheet" href="/css/layout.css">
-	<link rel="stylesheet" href="/css/view-album.css">
-	<title><?php echo $row['title'];?></title>
-</head>
-<body>
-	<?php require 'includes/header.php';?>
-	<div class="singlePageContainer">
-		<?php if($exists):?>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+			crossorigin="anonymous" />
+		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"
+			integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" />
+		<link rel="stylesheet" href="/css/layout.css">
+		<link rel="stylesheet" href="/css/view-album.css">
+		<title><?php echo $row['title'];?></title>
+	</head>
+
+	<body>
+		<?php require 'includes/header.php';?>
+		<div class="singlePageContainer">
+			<?php if($exists):?>
 			<!-- The Album does exist -->
 			<div class="container-fluid">
 				<div class="row justify-content-around mt-4">
@@ -58,13 +64,16 @@
 					</div>
 					<div class="col-md-4 order-md-2 col-12 order-1 text-center">
 						<h1><?php echo $row['title'];?></h1>
-						<h5><?php echo $row['location'];?> | <?php echo date("F jS, Y", strtotime($row['eventDate']));?></h5>
+						<h5><?php echo $row['location'];?> | <?php echo date("F jS, Y", strtotime($row['eventDate']));?>
+						</h5>
 						<!-- Edit Album Buttons -->
 						<div class="d-flex justify-content-center btn-group">
 							<a href="#" class="btn btn-sm btn-info">View Album</a>
-							<a href="/edit-album-info/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">Edit Album Info</a>
-							<a href="/edit-album-media/<?php echo urlencode($title);?>" class="btn btn-sm btn-outline-info">Edit Album Media</a>
-						</div>	
+							<a href="/edit-album-info/<?php echo urlencode($title);?>"
+								class="btn btn-sm btn-outline-info">Edit Album Info</a>
+							<a href="/edit-album-media/<?php echo urlencode($title);?>"
+								class="btn btn-sm btn-outline-info">Edit Album Media</a>
+						</div>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
 					<div class="mt-4 col-md-4 col-6 order-3 text-right">
@@ -106,16 +115,23 @@
 					</div>
 				</div>
 			</div>
-		<?php else: ?>
+			<?php else: ?>
 			<!-- The Album does not exist -->
 			<h1 class="text-center mt-5">There is no album with the title</h1>
 			<h1 class="text-center mt-1">"<?php echo $title;?>"</h1>
-		<?php endif; ?>
-	</div>
-	<?php require 'includes/footer.php';?>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js" integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
-</body>
+			<?php endif; ?>
+		</div>
+		<?php require 'includes/footer.php';?>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js"
+			integrity="sha256-awnyktR66d3+Hym/H0vYBQ1GkO06rFGkzKQcBj7npVE=" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"
+			integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+		<script src="/js/view-album.js"></script>
+	</body>
+
 </html>
