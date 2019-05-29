@@ -48,16 +48,17 @@
 				$thumbName = $thumbName->fetch_assoc();
 				echo
 				'<div class="">
+					<a class="card-link" href="/view-album/'.$curr["id"].'">
 					<div class="card m-4">
 						<div class="card-image-container">
 							<img class="card-img" src="/media/'.$thumbName["name"].'">
 						</div>
 						<div class="card-body">
-							<h3 class="card-title"><a href="/view-album/'.$curr["id"].'">'.$curr["title"].'</a></h3>
+							<h3 class="card-title">'.$curr["title"].'</h3>
 							<h5 class="card-subtitle">'.$curr["location"].'</h5>
 							<h5 class="card-subtitle">'.date("F jS, Y", strtotime($curr["eventDate"])).'</h5>
 						</div>
-					</div>
+					</div></a>
 				</div>';
 			}
 

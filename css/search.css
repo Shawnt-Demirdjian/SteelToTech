@@ -27,16 +27,14 @@
 	flex-basis: auto;
 	width: 20em;
 	height: 22.5em;
+
+	color: #272727;
 }
 
 .card-body {
 	padding: 0.5em 1em;
 }
 
-.card-title a {
-	color: #272727;
-}
-
-.card-subtitle {
-	color: #272727;
+.card:hover {
+	background-color: rgb(255, 237, 117);
 }
