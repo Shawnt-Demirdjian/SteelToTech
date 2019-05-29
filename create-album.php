@@ -155,7 +155,7 @@
 					<div class="col-11 col-md-6 border border-white d-flex justify-content-center align-items-center">
 						<div class="form-group">
 							<div class="text-center">
-								<label for="media[]">Upload Media</label>
+								<label for="media[]">Upload Media <br> Only supports .jpg .jpeg .mov .mp4</label>
 								<h4 class="invalid-feedback d-block"><?php if(isset($mediaErr)) echo $mediaErr;?></h4>
 								<input class="offset-2" type="file" name="media[]" accept=".jpeg, .jpg, .mov, .mp4"
 									multiple>
@@ -166,7 +166,7 @@
 						<div class="form-group col-12 col-sm-6">
 							<label for="title">Title</label>
 							<h4 class="invalid-feedback d-block"><?php if(isset($titleErr)) echo $titleErr;?></h4>
-							<input class="form-control" type="text" name="title" required>
+							<input class="form-control" type="text" name="title" required placeholder="What was the event?">
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="eventDate">Event Date</label>
@@ -176,17 +176,17 @@
 						<div class="form-group col-12 col-sm-6">
 							<label for="location">Location</label>
 							<h4 class="invalid-feedback d-block"><?php if(isset($locationErr)) echo $locationErr;?></h4>
-							<input class="form-control" type="text" name="location" required>
+							<input class="form-control" type="text" name="location" required placeholder="Where was the it?">
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="participants">Participants</label>
 							<h4 class="invalid-feedback d-block"><?php if(isset($participantsErr)) echo $participantsErr;?></h4>
-							<input class="form-control" type="text" name="participants" required>
+							<input class="form-control" type="text" name="participants" required placeholder="Who was there?">
 						</div>
 						<div class="form-group col-12">
 							<label for="description">Description</label>
 							<h4 class="invalid-feedback d-block"><?php if(isset($descriptionErr)) echo $descriptionErr;?></h4>
-							<textarea class="form-control" name="description" required></textarea>
+							<textarea class="form-control" name="description" required placeholder="What happened?"></textarea>
 						</div>
 						<div class="form-group col-12">
 							<button type="submit" name="submit" class="btn btn-info float-right">Submit</button>

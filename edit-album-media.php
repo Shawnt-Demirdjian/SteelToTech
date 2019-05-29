@@ -225,7 +225,7 @@ $link->close();
 					<form class="useLoader" action="" method="post" enctype="multipart/form-data">
 						<div class="form-group my-5 d-flex justify-content-center align-items-center">
 							<div class="text-center border border-white py-1 mr-1">
-								<label for="media[]">Upload Media</label>
+								<label for="media[]">Upload Media <br> Only supports .jpg .jpeg .mov .mp4</label>
 								<h4 class="invalid-feedback d-block"><?php if(isset($mediaErr)) echo $mediaErr; ?></h4>
 								<input class="offset-2" type="file" name="media[]" accept=".jpeg, .jpg, .mov, .mp4"
 									multiple>
