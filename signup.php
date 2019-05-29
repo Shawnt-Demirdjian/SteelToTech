@@ -118,30 +118,30 @@
 			<form id="signUp" class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="/signup" method="post">
 				<h2 class="text-center mb-2">Signup</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-				<h3 class="invalid-feedback d-block"><?php echo $failure;?></h3>
+				<h3 class="invalid-feedback d-block"><?php if(isset($failure)) echo $failure;?></h3>
 				<div class="form-group">
 					<label for="firstName">First Name</label>
-					<h4 class="invalid-feedback d-block"><?php echo $firstNameErr;?></h4>
+					<h4 class="invalid-feedback d-block"><?php if(isset($firstNameErr)) echo $firstNameErr;?></h4>
 					<input class="form-control" type="text" name="firstName" value="" required>
 				</div>
 				<div class="form-group">
 					<label for="lastName">Last Name</label>
-					<h4 class="invalid-feedback d-block"><?php echo $lastNameErr;?></h4>
+					<h4 class="invalid-feedback d-block"><?php if(isset($lastNameErr)) echo $lastNameErr;?></h4>
 					<input class="form-control" type="text" name="lastName" value="" required>
 				</div>
 				<div class="form-group">
 					<label for="email">Email</label>
-					<h4 class="invalid-feedback d-block"><?php echo $emailErr;?></h4>
+					<h4 class="invalid-feedback d-block"><?php if(isset($emailErr)) echo $emailErr;?></h4>
 					<input class="form-control" type="email" name="email" value="" required>
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
-					<h4 class="invalid-feedback d-block"><?php echo $passwordErr;?></h4>
+					<h4 class="invalid-feedback d-block"><?php if(isset($passwordErr)) echo $passwordErr;?></h4>
 					<input class="form-control" type="password" name="password" value="" required>
 				</div>
 				<div class="form-group">
 					<label for="passwordConfirm">Password Confirm</label>
-					<h4 class="invalid-feedback d-block"><?php echo $passwordConfirmErr;?></h4>
+					<h4 class="invalid-feedback d-block"><?php if(isset($passwordConfirmErr)) echo $passwordConfirmErr;?></h4>
 					<input class="form-control" type="password" name="passwordConfirm" value="" required>
 				</div>
 				<button type="submit" value="signUp" class="btn btn-info">Sign Up</button>

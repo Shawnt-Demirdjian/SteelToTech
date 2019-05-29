@@ -138,7 +138,11 @@
 		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 		<link rel="stylesheet" href="/css/layout.css">
-		<title><?php echo $row['title'];?></title>
+		<?php if(isset($row['title'])):?>
+			<title><?php echo $row['title'];?></title>
+		<?php else: ?>
+			<title>Album Not Found</title>
+		<?php endif; ?>
 	</head>
 
 	<body>
@@ -160,10 +164,8 @@
 							<a href="/edit-album-media/<?php echo $albumID;?>"
 								class="btn btn-sm btn-outline-info">Edit Album Media</a>
 						</div>
-						<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $success):?>
-						<h4 class="text-center valid-feedback d-block "><?php echo $successMessage;?></h4>
-						<?php elseif($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-						<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage;?></h4>
+						<?php if(isset($failMessage)):?>
+							<h4 class="text-center valid-feedback d-block "><?php echo $failMessage;?></h4>
 						<?php endif; ?>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
@@ -173,31 +175,31 @@
 				<form class="col-10 mx-auto row" action="" method="post">
 					<div class="form-group col-12">
 						<label for="title">Title</label>
-						<h4 class="invalid-feedback d-block"><?php echo $titleErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($titleErr)) echo $titleErr;?></h4>
 						<input class="form-control" type="text" name="title" value="<?php echo $row['title'];?>"
 							required>
 					</div>
 					<div class="form-group col-12 col-sm-6">
 						<label for="location">Location</label>
-						<h4 class="invalid-feedback d-block"><?php echo $locationErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($locationErr)) echo $locationErr;?></h4>
 						<input class="form-control" type="text" name="location" value="<?php echo $row['location'];?>"
 							required>
 					</div>
 					<div class="form-group col-12 col-sm-6">
 						<label for="eventDate">Event Date</label>
-						<h4 class="invalid-feedback d-block"><?php echo $eventDateErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($eventDateErr)) echo $eventDateErr;?></h4>
 						<input class="form-control" type="date" name="eventDate" value="<?php echo $row['eventDate'];?>"
 							required>
 					</div>
 					<div class="form-group col-12">
 						<label for="participants">Participants</label>
-						<h4 class="invalid-feedback d-block"><?php echo $participantsErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($participantsErr)) echo $participantsErr;?></h4>
 						<input class="form-control" type="text" name="participants"
 							value="<?php echo $row['participants'];?>" required>
 					</div>
 					<div class="form-group col-12">
 						<label for="description">Description</label>
-						<h4 class="invalid-feedback d-block"><?php echo $descriptionErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($descriptionErr)) echo $descriptionErr;?></h4>
 						<textarea rows="5" class="form-control" name="description"
 							required><?php echo $row['description'];?></textarea>
 					</div>
@@ -211,7 +213,7 @@
 					<div class="text-center">
 						<h3 class="col">Danger Below!</h3>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-						<h4 class="invalid-feedback d-block"><?php echo $deleteErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($deleteErr)) echo $deleteErr;?></h4>
 						<button class="btn btn-danger col-12" data-toggle="modal"
 							data-target="#delete-album-modal">Delete Album</button>
 					</div>

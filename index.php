@@ -23,7 +23,7 @@
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 
 			<div class="d-flex justify-content-center my-4">
-				<?php if($_SESSION['userID'] > 0):?>
+				<?php if(isset($_SESSION['userID']) && $_SESSION['userID'] > 0):?>
 				<a href="/search" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>
 				<?php else: ?>
 				<a href="/login" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>

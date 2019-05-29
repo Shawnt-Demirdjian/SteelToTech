@@ -48,7 +48,11 @@
 			integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" />
 		<link rel="stylesheet" href="/css/layout.css">
 		<link rel="stylesheet" href="/css/view-album.css">
-		<title><?php echo $row['title'];?></title>
+		<?php if(isset($row['title'])):?>
+			<title><?php echo $row['title'];?></title>
+		<?php else: ?>
+			<title>Album Not Found</title>
+		<?php endif; ?>
 	</head>
 
 	<body>

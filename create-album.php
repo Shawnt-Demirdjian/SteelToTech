@@ -156,7 +156,7 @@
 						<div class="form-group">
 							<div class="text-center">
 								<label for="media[]">Upload Media</label>
-								<h4 class="invalid-feedback d-block"><?php echo $mediaErr;?></h4>
+								<h4 class="invalid-feedback d-block"><?php if(isset($mediaErr)) echo $mediaErr;?></h4>
 								<input class="offset-2" type="file" name="media[]" accept=".jpeg, .jpg, .mov, .mp4"
 									multiple>
 							</div>
@@ -165,27 +165,27 @@
 					<div class="col-12 col-md-6 mt-4 mt-md-0 row justify-content-center">
 						<div class="form-group col-12 col-sm-6">
 							<label for="title">Title</label>
-							<h4 class="invalid-feedback d-block"><?php echo $titleErr;?></h4>
+							<h4 class="invalid-feedback d-block"><?php if(isset($titleErr)) echo $titleErr;?></h4>
 							<input class="form-control" type="text" name="title" required>
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="eventDate">Event Date</label>
-							<h4 class="invalid-feedback d-block"><?php echo $eventDateErr;?></h4>
+							<h4 class="invalid-feedback d-block"><?php if(isset($eventDateErr)) echo $eventDateErr;?></h4>
 							<input class="form-control" type="date" name="eventDate" required>
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="location">Location</label>
-							<h4 class="invalid-feedback d-block"><?php echo $locationErr;?></h4>
+							<h4 class="invalid-feedback d-block"><?php if(isset($locationErr)) echo $locationErr;?></h4>
 							<input class="form-control" type="text" name="location" required>
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="participants">Participants</label>
-							<h4 class="invalid-feedback d-block"><?php echo $participantsErr;?></h4>
+							<h4 class="invalid-feedback d-block"><?php if(isset($participantsErr)) echo $participantsErr;?></h4>
 							<input class="form-control" type="text" name="participants" required>
 						</div>
 						<div class="form-group col-12">
 							<label for="description">Description</label>
-							<h4 class="invalid-feedback d-block"><?php echo $descriptionErr;?></h4>
+							<h4 class="invalid-feedback d-block"><?php if(isset($descriptionErr)) echo $descriptionErr;?></h4>
 							<textarea class="form-control" name="description" required></textarea>
 						</div>
 						<div class="form-group col-12">

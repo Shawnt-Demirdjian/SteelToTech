@@ -105,10 +105,10 @@
 			<form class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="" method="post">
 				<h2 class="text-center mb-2">Password Recovery</h2>
 				<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
-				<h3 class="valid-feedback d-block"><?php echo $SucMessage;?></h3>
+				<h3 class="valid-feedback d-block"><?php if(isset($SucMessage)) echo $SucMessage;?></h3>
 				<div class="form-group">
 					<label for="email">Email</label>
-					<h4 class="invalid-feedback d-block"><?php echo $emailErr;?></h4>
+					<h4 class="invalid-feedback d-block"><?php if(isset($emailErr)) echo $emailErr;?></h4>
 					<input class="form-control" type="email" name="email" value="" required>
 				</div>
 				<button type="submit" value="logIn" class="btn btn-info">Recover</button>

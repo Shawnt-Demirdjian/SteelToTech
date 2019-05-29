@@ -111,7 +111,11 @@ $link->close();
 		<link rel="stylesheet" href="/css/layout.css">
 		<link rel="stylesheet" href="/css/loading.css">
 		<link rel="stylesheet" href="/css/view-album.css">
-		<title><?php echo $row['title']; ?></title>
+		<?php if(isset($row['title'])):?>
+			<title><?php echo $row['title'];?></title>
+		<?php else: ?>
+			<title>Album Not Found</title>
+		<?php endif; ?>
 	</head>
 
 	<body>
@@ -134,9 +138,9 @@ $link->close();
 							<a href="#" class="btn btn-sm btn-info">Edit Album Media</a>
 						</div>
 						<?php if ($_SERVER["REQUEST_METHOD"] == "POST" && $success): ?>
-						<h4 class="text-center valid-feedback d-block "><?php echo $successMessage; ?></h4>
+							<h4 class="text-center valid-feedback d-block "><?php echo $successMessage; ?></h4>
 						<?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-						<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage; ?></h4>
+							<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage; ?></h4>
 						<?php endif;?>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
@@ -222,7 +226,7 @@ $link->close();
 						<div class="form-group my-5 d-flex justify-content-center align-items-center">
 							<div class="text-center border border-white py-1 mr-1">
 								<label for="media[]">Upload Media</label>
-								<h4 class="invalid-feedback d-block"><?php echo $mediaErr; ?></h4>
+								<h4 class="invalid-feedback d-block"><?php if(isset($mediaErr)) echo $mediaErr; ?></h4>
 								<input class="offset-2" type="file" name="media[]" accept=".jpeg, .jpg, .mov, .mp4"
 									multiple>
 								<input class="d-none" type="number" name="albumID" value="<?php echo $row['id']; ?>">

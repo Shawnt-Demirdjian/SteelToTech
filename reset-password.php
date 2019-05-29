@@ -96,16 +96,16 @@
 			<?php if($valid):?>
 				<form class="mt-5 col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-4" action="" method="post">
 					<h2 class="text-center mb-2">Password Reset</h2>
-					<h4 class="invalid-feedback d-block text-center"><?php echo $failMessage;?></h4>
+					<h4 class="invalid-feedback d-block text-center"><?php if(isset($failMessage)) echo $failMessage;?></h4>
 					<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					<div class="form-group">
 						<label for="password">New Password</label>
-						<h4 class="invalid-feedback d-block"><?php echo $passwordErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($passwordErr)) echo $passwordErr;?></h4>
 						<input class="form-control" type="password" name="password" value="" required>
 					</div>
 					<div class="form-group">
 						<label for="passwordConfirm">New Password Confirm</label>
-						<h4 class="invalid-feedback d-block"><?php echo $passwordConfirmErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($passwordConfirmErr)) echo $passwordConfirmErr;?></h4>
 						<input class="form-control" type="password" name="passwordConfirm" value="" required>
 					</div>
 					<button type="reset" class="btn btn-danger">Reset</button>
