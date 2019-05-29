@@ -29,15 +29,8 @@
 			$titleErr = "Title is required";
 			$success = false;
 		}else {
-			$res = $link->query("SELECT id FROM albums WHERE title LIKE '{$_POST["title"]}'");
-			if($res->num_rows > 0 ){
-				// Title Taken
-				$success = false;
-				$titleErr = "Title has been taken";
-			} else{
-				$title = $_POST["title"];
-				$title = filter_var($title, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-			}
+			$title = $_POST["title"];
+			$title = filter_var($title, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 		}
 
 		// Location Validation
@@ -118,7 +111,7 @@
 						$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
 					}
 				}
-				header('Location: /view-album/'. urlencode($title));
+				header('Location: /view-album/'. $newAlbumID);
 				$link->close();
 				die();
 			}else{
@@ -143,10 +136,10 @@
 		<link rel="stylesheet" href="./css/layout.css">
 		<link rel="stylesheet" href="/css/loading.css">
 		<style>
-		#create-album {
-			color: white !important;
-			text-decoration: underline;
-		}
+			#create-album {
+				color: white !important;
+				text-decoration: underline;
+			}
 		</style>
 		<title>Create Album</title>
 	</head>

@@ -45,23 +45,24 @@ ErrorDocument 404 /404.php
 
 # Album URL Parameters
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^view-album\/(.*)$ view-album.php?title=$1 [NC,L]
 RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^view-album\/(.*)$ view-album.php?albumID=$1 [NC,L]
+
 # Edit Album Info URL Parameters
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
-RewriteRule ^edit-album-info\/(.*)$ edit-album-info.php?title=$1 [NC,L]
+RewriteRule ^edit-album-info\/(.*)$ edit-album-info.php?albumID=$1 [NC,L]
 
 # Edit Album Media URL Parameters
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
-RewriteRule ^edit-album-media\/(.*)$ edit-album-media.php?title=$1 [NC,L]
+RewriteRule ^edit-album-media\/(.*)$ edit-album-media.php?albumID=$1 [NC,L]
 
 # Remove .php
 RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$

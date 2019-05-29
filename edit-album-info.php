@@ -28,15 +28,6 @@
 			$titleErr = "Title is required";
 			$success = false;
 		}else {
-			if(strcasecmp($_POST["title"], $_GET['title']) != 0){
-				// Title field was changed
-				$res = $link->query("SELECT id FROM albums WHERE title LIKE '{$_POST['title']}'");
-				if($res->num_rows > 0 ){
-					// Title Taken
-					$success = false;
-					$titleErr = "Title has been taken";
-				}
-			}
 			$title = $_POST["title"];
 			$title = filter_var($title, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 		}
@@ -80,11 +71,11 @@
 		if($success){
 			// Form is Valid
 			// Update Album Entity
-			$resUpdate = $link->query("UPDATE albums SET title = '{$title}', location = '{$location}', participants = '{$participants}', description = '{$description}', eventDate = '{$eventDate}' WHERE title LIKE '{$_GET['title']}'");
+			$resUpdate = $link->query("UPDATE albums SET title = '{$title}', location = '{$location}', participants = '{$participants}', description = '{$description}', eventDate = '{$eventDate}' WHERE id LIKE '{$_GET['albumID']}'");
 			if($resUpdate){
 				// Update Successful
 				$successMessage = "Album update successful!";
-				header('Location: /edit-album-info/'. urlencode($title));
+				header('Location: /edit-album-info/'.$_GET['albumID']);
 			}else{
 				// Update Failed
 				$failMessage = "Album update failed. Please tell Shawnt.";
@@ -116,9 +107,9 @@
 	}
 
 	// Check if this album exists
-	$title = $_GET['title'];
+	$albumID = $_GET['albumID'];
 	$exists = true;
-	$res = $link->query("SELECT * FROM albums WHERE title LIKE '{$title}'");
+	$res = $link->query("SELECT * FROM albums WHERE id LIKE '{$albumID}'");
 	$row = $res->fetch_assoc();
 	if($res->num_rows <= 0 ){
 		// Album does not exists
@@ -163,10 +154,10 @@
 						</h5>
 						<!-- Edit Album Buttons -->
 						<div class="d-flex justify-content-center btn-group">
-							<a href="/view-album/<?php echo urlencode($title);?>"
+							<a href="/view-album/<?php echo $albumID;?>"
 								class="btn btn-sm btn-outline-info">View Album</a>
 							<a href="#" class="btn btn-sm btn-info">Edit Album Info</a>
-							<a href="/edit-album-media/<?php echo urlencode($title);?>"
+							<a href="/edit-album-media/<?php echo $albumID;?>"
 								class="btn btn-sm btn-outline-info">Edit Album Media</a>
 						</div>
 						<?php if($_SERVER["REQUEST_METHOD"] == "POST" && $success):?>
@@ -228,8 +219,7 @@
 			</div>
 			<?php else: ?>
 			<!-- The Album does not exist -->
-			<h1 class="text-center mt-5">There is no album with the title</h1>
-			<h1 class="text-center mt-1">"<?php echo $title;?>"</h1>
+			<h1 class="text-center mt-5">That album doesn't seem to exist.</h1>
 			<?php endif; ?>
 		</div>
 		<?php require 'includes/footer.php';?>

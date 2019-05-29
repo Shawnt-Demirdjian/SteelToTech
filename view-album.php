@@ -18,9 +18,9 @@
 	}
 
 	// Check if this album exists
-	$title = $_GET['title'];
+	$albumID = $_GET['albumID'];
 	$exists = true;
-	$res = $link->query("SELECT * FROM albums WHERE title LIKE '{$title}'");
+	$res = $link->query("SELECT * FROM albums WHERE id LIKE '{$albumID}'");
 	$row = $res->fetch_assoc();
 	if($res->num_rows <= 0 ){
 		// Album does not exists
@@ -69,9 +69,9 @@
 						<!-- Edit Album Buttons -->
 						<div class="d-flex justify-content-center btn-group">
 							<a href="#" class="btn btn-sm btn-info">View Album</a>
-							<a href="/edit-album-info/<?php echo urlencode($title);?>"
+							<a href="/edit-album-info/<?php echo urlencode($albumID);?>"
 								class="btn btn-sm btn-outline-info">Edit Album Info</a>
-							<a href="/edit-album-media/<?php echo urlencode($title);?>"
+							<a href="/edit-album-media/<?php echo urlencode($albumID);?>"
 								class="btn btn-sm btn-outline-info">Edit Album Media</a>
 						</div>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
@@ -117,8 +117,7 @@
 			</div>
 			<?php else: ?>
 			<!-- The Album does not exist -->
-			<h1 class="text-center mt-5">There is no album with the title</h1>
-			<h1 class="text-center mt-1">"<?php echo $title;?>"</h1>
+			<h1 class="text-center mt-5">That album doesn't seem to exist.</h1>
 			<?php endif; ?>
 		</div>
 		<?php require 'includes/footer.php';?>
