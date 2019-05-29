@@ -18,7 +18,7 @@
 	}
 
 	// Get 10 most recent albums
-	$res = $link->query("SELECT id, title, location, uploadDate FROM albums ORDER BY uploadDate DESC LIMIT 10");
+	$res = $link->query("SELECT id, title, location, eventDate FROM albums ORDER BY eventDate DESC LIMIT 10");
 
 ?>
 <!DOCTYPE html>
@@ -55,7 +55,7 @@
 						<div class="card-body">
 							<h3 class="card-title"><a href="/view-album/'.$curr["id"].'">'.$curr["title"].'</a></h3>
 							<h5 class="card-subtitle">'.$curr["location"].'</h5>
-							<h5 class="card-subtitle">'.date("F jS, Y", strtotime($curr["uploadDate"])).'</h5>
+							<h5 class="card-subtitle">'.date("F jS, Y", strtotime($curr["eventDate"])).'</h5>
 						</div>
 					</div>
 				</div>';
