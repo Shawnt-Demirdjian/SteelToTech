@@ -49,7 +49,9 @@
 				echo
 				'<div class="">
 					<div class="card m-4">
-						<img class="card-img-top" src="/media/'.$thumbName["name"].'">
+						<div class="card-image-container">
+							<img class="card-img" src="/media/'.$thumbName["name"].'">
+						</div>
 						<div class="card-body">
 							<h3 class="card-title"><a href="/view-album/'.urlencode($curr["title"]).'">'.$curr["title"].'</a></h3>
 							<h5 class="card-subtitle">'.$curr["location"].'</h5>

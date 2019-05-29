@@ -204,8 +204,8 @@
 		</div>
 		<div id="loader-background"></div>
 		<div id="loader">
-			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"></img>
-			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"></img>
+			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"/>
+			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"/>
 			<h2 id="loader-message">Loading...</h2>
 		</div>
 
