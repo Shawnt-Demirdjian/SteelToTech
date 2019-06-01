@@ -49,9 +49,9 @@
 		<link rel="stylesheet" href="/css/layout.css">
 		<link rel="stylesheet" href="/css/view-album.css">
 		<?php if(isset($row['title'])):?>
-			<title><?php echo $row['title'];?></title>
+		<title><?php echo $row['title'];?></title>
 		<?php else: ?>
-			<title>Album Not Found</title>
+		<title>Album Not Found</title>
 		<?php endif; ?>
 	</head>
 
@@ -100,7 +100,7 @@
 								}else{
 									// Image Type
 									echo '<a class="" href="/media/'.$currentMedia.'" data-fancybox="gallery">';
-									echo '<img class="col-lg-2 col-md-4 col-sm-6 col-12 album-image mb-4" src="/thumbnails/'.$currentMedia.'">';
+									echo '<img class="col-lg-2 col-md-4 col-sm-6 col-12 album-image mb-4" data-src="/thumbnails/'.$currentMedia.'">';
 									echo '</a>';
 								}								
 							}
@@ -113,7 +113,7 @@
 					<div class="col-12 text-center">
 						<?php
 							foreach ($videos as &$name){
-								echo '<video type="video/mp4" controls class="align-middle col-lg-2 col-md-4 col-sm-6 col-12 album-video mb-5" src="/media/'.$name.'"></video>';
+								echo '<video type="video/mp4" controls class="align-middle col-lg-2 col-md-4 col-sm-6 col-12 album-video mb-5" data-src="/media/'.$name.'"></video>';
 							}
 						?>
 					</div>

@@ -112,9 +112,9 @@ $link->close();
 		<link rel="stylesheet" href="/css/loading.css">
 		<link rel="stylesheet" href="/css/view-album.css">
 		<?php if(isset($row['title'])):?>
-			<title><?php echo $row['title'];?></title>
+		<title><?php echo $row['title'];?></title>
 		<?php else: ?>
-			<title>Album Not Found</title>
+		<title>Album Not Found</title>
 		<?php endif; ?>
 	</head>
 
@@ -131,16 +131,16 @@ $link->close();
 							<?php echo date("F jS, Y", strtotime($row['eventDate'])); ?></h5>
 						<!-- Edit Album Buttons -->
 						<div class="d-flex justify-content-center btn-group">
-							<a href="/view-album/<?php echo $albumID; ?>"
-								class="btn btn-sm btn-outline-info">View Album</a>
-							<a href="/edit-album-info/<?php echo $albumID; ?>"
-								class="btn btn-sm btn-outline-info">Edit Album Info</a>
+							<a href="/view-album/<?php echo $albumID; ?>" class="btn btn-sm btn-outline-info">View
+								Album</a>
+							<a href="/edit-album-info/<?php echo $albumID; ?>" class="btn btn-sm btn-outline-info">Edit
+								Album Info</a>
 							<a href="#" class="btn btn-sm btn-info">Edit Album Media</a>
 						</div>
 						<?php if ($_SERVER["REQUEST_METHOD"] == "POST" && $success): ?>
-							<h4 class="text-center valid-feedback d-block "><?php echo $successMessage; ?></h4>
+						<h4 class="text-center valid-feedback d-block "><?php echo $successMessage; ?></h4>
 						<?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-							<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage; ?></h4>
+						<h4 class="text-center invalid-feedback d-block "><?php echo $failMessage; ?></h4>
 						<?php endif;?>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
@@ -166,7 +166,7 @@ $link->close();
 										echo '<button type="button" class="btn btn-sm rotate-left-btn"><i class="fas fa-undo"></i></button>';
 										echo '<button type="button" class="btn btn-sm rotate-right-btn"><i class="fas fa-redo"></i></button>';
 										echo '<button type="button" class="btn btn-sm save-rotation"><i class="far fa-save"></i></button></div>';
-										echo '<img data-angle="0" class="album-image mb-4" src="/thumbnails/' . $currentMedia . '">';
+										echo '<img data-angle="0" class="album-image mb-4" data-src="/thumbnails/' . $currentMedia . '">';
 										echo '<input class="media-checkbox" name="' . ($nameIndex+1) . '" value="' . $currentMedia . '" type="checkbox">';
 										echo '</div>';
 									}								
@@ -179,7 +179,7 @@ $link->close();
 							<?php
 								foreach ($videos as &$name){
 									echo '<div class="media-item">';
-									echo '<video type="video/mp4" controls class="album-video mb-5 align-middle " src="/media/' . $name . '"></video>';
+									echo '<video type="video/mp4" controls class="album-video mb-5 align-middle " data-src="/media/' . $name . '"></video>';
 									echo '<input class="media-checkbox" name="' . (++$nameIndex) . '" value="' . $name . '" type="checkbox">';
 									echo '</div>';								
 								}
@@ -244,8 +244,8 @@ $link->close();
 		</div>
 		<div id="loader-background"></div>
 		<div id="loader">
-			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"/>
-			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"/>
+			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg" />
+			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg" />
 			<h2 id="loader-message">Loading...</h2>
 		</div>
 
