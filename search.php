@@ -61,7 +61,7 @@
 					<a class="card-link" href="/view-album/'.$curr["id"].'">
 					<div class="card m-4">
 						<div class="card-image-container">
-							<img class="card-img" data-src="/media/'.$thumbName["name"].'">
+							<img class="card-img" data-src="/media/medium/'.$thumbName["name"].'">
 						</div>
 						<div class="card-body">
 							<h3 class="card-title">'.$curr["title"].'</h3>

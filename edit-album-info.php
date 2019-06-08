@@ -88,10 +88,12 @@
 		if($res){
 			for($i=0; $i<$res->num_rows; $i++){
 				$row = $res->fetch_assoc();
-				unlink("media/".$row["name"]);
+				unlink("media/source/".$row["name"]);
 				if(preg_match('/\.jpeg|\.jpg/i', $row["name"]) == 1){
-					// unlink thumbnail if its a JPEG
-					unlink("thumbnails/".$row["name"]);
+					// unlink scaled copies
+					unlink("media/small/".$row["name"]);
+					unlink("media/medium/".$row["name"]);
+					unlink("media/large/".$row["name"]);
 				}
 			}
 			// delete album and cascades to all media. 
@@ -139,9 +141,9 @@
 		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 		<link rel="stylesheet" href="/css/layout.css">
 		<?php if(isset($row['title'])):?>
-			<title><?php echo $row['title'];?></title>
+		<title><?php echo $row['title'];?></title>
 		<?php else: ?>
-			<title>Album Not Found</title>
+		<title>Album Not Found</title>
 		<?php endif; ?>
 	</head>
 
@@ -158,14 +160,14 @@
 						</h5>
 						<!-- Edit Album Buttons -->
 						<div class="d-flex justify-content-center btn-group">
-							<a href="/view-album/<?php echo $albumID;?>"
-								class="btn btn-sm btn-outline-info">View Album</a>
+							<a href="/view-album/<?php echo $albumID;?>" class="btn btn-sm btn-outline-info">View
+								Album</a>
 							<a href="#" class="btn btn-sm btn-info">Edit Album Info</a>
-							<a href="/edit-album-media/<?php echo $albumID;?>"
-								class="btn btn-sm btn-outline-info">Edit Album Media</a>
+							<a href="/edit-album-media/<?php echo $albumID;?>" class="btn btn-sm btn-outline-info">Edit
+								Album Media</a>
 						</div>
 						<?php if(isset($failMessage)):?>
-							<h4 class="text-center valid-feedback d-block "><?php echo $failMessage;?></h4>
+						<h4 class="text-center valid-feedback d-block "><?php echo $failMessage;?></h4>
 						<?php endif; ?>
 						<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
 					</div>
@@ -193,13 +195,15 @@
 					</div>
 					<div class="form-group col-12">
 						<label for="participants">Participants</label>
-						<h4 class="invalid-feedback d-block"><?php if(isset($participantsErr)) echo $participantsErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($participantsErr)) echo $participantsErr;?>
+						</h4>
 						<input class="form-control" type="text" name="participants"
 							value="<?php echo $row['participants'];?>" required>
 					</div>
 					<div class="form-group col-12">
 						<label for="description">Description</label>
-						<h4 class="invalid-feedback d-block"><?php if(isset($descriptionErr)) echo $descriptionErr;?></h4>
+						<h4 class="invalid-feedback d-block"><?php if(isset($descriptionErr)) echo $descriptionErr;?>
+						</h4>
 						<textarea rows="5" class="form-control" name="description"
 							required><?php echo $row['description'];?></textarea>
 					</div>

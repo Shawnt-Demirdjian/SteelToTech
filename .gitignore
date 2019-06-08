@@ -1,6 +1,10 @@
+# IDE config
 .vscode
+# PHP config
 php.ini
+# server binaries
 cgi-bin/
+# saved images and video
 media/
-thumbnails/
+# environment variables
 config.php

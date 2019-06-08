@@ -94,14 +94,18 @@
 							for($i=0; $i < $resMedia->num_rows; $i++){
 								$currentMedia = $resMedia->fetch_assoc()["name"];
 								
-								if (preg_match("/video/",mime_content_type("./media/" . $currentMedia)) == 1){
+								if (preg_match("/video/",mime_content_type("./media/source/" . $currentMedia)) == 1){
 									// Video Type
 									array_push($videos, $currentMedia);
 								}else{
 									// Image Type
-									echo '<a class="" href="/media/'.$currentMedia.'" data-fancybox="gallery">';
-									echo '<img class="col-lg-2 col-md-4 col-sm-6 col-12 album-image mb-4" data-src="/thumbnails/'.$currentMedia.'">';
-									echo '</a>';
+									echo
+									"<a href='/media/large/{$currentMedia}' data-fancybox='gallery' class='album-picture-link'>
+										<picture class='album-picture'>
+											<source data-srcset='/media/medium/{$currentMedia}' media='(max-width: 576px)'>
+											<img class='col-lg-2 col-md-4 col-sm-6 col-12 mb-4 album-image' data-src='/media/small/{$currentMedia}'>
+										</picture>
+									</a>";
 								}								
 							}
 						?>
@@ -113,7 +117,7 @@
 					<div class="col-12 text-center">
 						<?php
 							foreach ($videos as &$name){
-								echo '<video type="video/mp4" controls class="align-middle col-lg-2 col-md-4 col-sm-6 col-12 album-video mb-5" data-src="/media/'.$name.'"></video>';
+								echo '<video type="video/mp4" controls class="align-middle col-lg-2 col-md-4 col-sm-6 col-12 album-video mb-5" data-src="/media/source/'.$name.'"></video>';
 							}
 						?>
 					</div>

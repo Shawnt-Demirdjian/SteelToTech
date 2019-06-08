@@ -27,8 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "del") {
 			if ($key != "submit" && $key != "albumID"){
 				// $value is the name of the file to be deleted.
 				$res = $link->query("DELETE FROM media WHERE name = '{$value}' AND parent= '{$albumID}' ");
-				unlink("media/".$value);
-				unlink("thumbnails/".$value);
+				unlink("media/source/".$value);
+				unlink("media/small/".$value);
+				unlink("media/medium/".$value);
+				unlink("media/large/".$value);
 			}
 		}
 	}
@@ -57,22 +59,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] == "del") {
 				// Insert into Database
 				$link->query("INSERT INTO media (uploader, uploadDate, parent, name) VALUES ('{$_SESSION['userID']}','{$uploadDate}','{$albumID}','{$uniqueFileName}')");
 				// Move to /media
-				move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
+				move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/source/" . $uniqueFileName);
 
 				if(preg_match('/image\/jpeg/', $_FILES['media']['type'][$i]) == 1){
-					// Create thumbnail for JPEGS only (ignore videos)
-					$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
-					$resolution = getimagesize("media/" . $uniqueFileName);
-					// Scale thumbnail
-					if($resolution[0] > $resolution[1]){
-						// Landscape
-						$thumbnail = imagescale($thumbnail, 150);
-					}else{
-						// Portrait
-						$thumbnail = imagescale($thumbnail, 75);
-					}
-					// Save thumbnail
-					$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
+						// scale copies for JPEGS only (ignore videos)
+						$source = imagecreatefromjpeg("media/source/" . $uniqueFileName);
+						$resolution = getimagesize("media/source/" . $uniqueFileName);
+						$small = $medium = $large = $source;
+
+						// Scale copies
+						if($resolution[0] > $resolution[1]){
+							// Landscape
+							$small = imagescale($small, 150);
+							$medium = imagescale($medium, 450);
+							$large = imagescale($large, 1200);
+						}else{
+							// Portrait
+							$small = imagescale($small, 75);
+							$medium = imagescale($medium, 225);
+							$large = imagescale($large, 600);
+						}
+						// Save copies
+						imagejpeg($small, "media/small/" . $uniqueFileName, 100);
+						imagejpeg($medium, "media/medium/" . $uniqueFileName, 100);
+						imagejpeg($large, "media/large/" . $uniqueFileName, 100);
 				}
 			}
 		}
@@ -155,10 +165,10 @@ $link->close();
 								$nameIndex = 0;
 								for ($nameIndex; $nameIndex < $resMedia->num_rows; $nameIndex++) {
 									$currentMedia = $resMedia->fetch_assoc()["name"];								
-									if (preg_match("/video/", mime_content_type("./media/" . $currentMedia)) == 1) {
+									if (preg_match("/video/", mime_content_type("./media/source/" . $currentMedia)) == 1) {
 										// Video Type
 										array_push($videos, $currentMedia);
-										// echo '<video type="video/mp4" controls class="img-fluid" src="/media/' . $currentMedia . '"></video>';
+										// echo '<video type="video/mp4" controls class="img-fluid" src="/media/source/' . $currentMedia . '"></video>';
 									} else {
 										// Image Type
 										echo '<div class="media-item text-center">';
@@ -166,7 +176,7 @@ $link->close();
 										echo '<button type="button" class="btn btn-sm rotate-left-btn"><i class="fas fa-undo"></i></button>';
 										echo '<button type="button" class="btn btn-sm rotate-right-btn"><i class="fas fa-redo"></i></button>';
 										echo '<button type="button" class="btn btn-sm save-rotation"><i class="far fa-save"></i></button></div>';
-										echo '<img data-angle="0" class="album-image mb-4" data-src="/thumbnails/' . $currentMedia . '">';
+										echo '<img data-angle="0" class="album-image mb-4" data-src="/media/small/' . $currentMedia . '">';
 										echo '<input class="media-checkbox" name="' . ($nameIndex+1) . '" value="' . $currentMedia . '" type="checkbox">';
 										echo '</div>';
 									}								
@@ -179,7 +189,7 @@ $link->close();
 							<?php
 								foreach ($videos as &$name){
 									echo '<div class="media-item">';
-									echo '<video type="video/mp4" controls class="album-video mb-5 align-middle " data-src="/media/' . $name . '"></video>';
+									echo '<video type="video/mp4" controls class="album-video mb-5 align-middle " data-src="/media/source/' . $name . '"></video>';
 									echo '<input class="media-checkbox" name="' . (++$nameIndex) . '" value="' . $name . '" type="checkbox">';
 									echo '</div>';								
 								}

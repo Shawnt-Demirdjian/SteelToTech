@@ -92,23 +92,32 @@
 					$uniqueFileName = preg_replace('/[^a-z0-9-_+A-Z.]+/', '-', uniqid(bin2hex(random_bytes(5))) . basename($_FILES['media']['name'][$i]));
 					// Insert into Database
 					$link->query("INSERT INTO media (uploader, uploadDate, parent, name) VALUES ('{$_SESSION['userID']}','{$uploadDate}','{$newAlbumID}','{$uniqueFileName}')");
-					// Move to /media
-					move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/" . $uniqueFileName);
+					// Move to /media/source
+					move_uploaded_file($_FILES['media']['tmp_name'][$i], "media/source/" . $uniqueFileName);
 					
 					if(preg_match('/image\/jpeg/', $_FILES['media']['type'][$i]) == 1){
-						// Create thumbnail for JPEGS only (ignore videos)
-						$thumbnail = imagecreatefromjpeg("media/" . $uniqueFileName);
-						$resolution = getimagesize("media/" . $uniqueFileName);
-						// Scale thumbnail
+						// scale copies for JPEGS only (ignore videos)
+						$source = imagecreatefromjpeg("media/source/" . $uniqueFileName);
+						$resolution = getimagesize("media/source/" . $uniqueFileName);
+						$small = $medium = $large = $source;
+
+						// Scale copies
 						if($resolution[0] > $resolution[1]){
 							// Landscape
-							$thumbnail = imagescale($thumbnail, 150);
+							$small = imagescale($small, 150);
+							$medium = imagescale($medium, 450);
+							$large = imagescale($large, 1200);
 						}else{
 							// Portrait
-							$thumbnail = imagescale($thumbnail, 75);
+							$small = imagescale($small, 75);
+							$medium = imagescale($medium, 225);
+							$large = imagescale($large, 600);
 						}
-						// Save thumbnail
-						$resulttemp = imagejpeg($thumbnail, "thumbnails/" . $uniqueFileName, 100);
+						// Save copies
+						imagejpeg($small, "media/small/" . $uniqueFileName, 100);
+						imagejpeg($medium, "media/medium/" . $uniqueFileName, 100);
+						imagejpeg($large, "media/large/" . $uniqueFileName, 100);
+						
 					}
 				}
 				header('Location: /view-album/'. $newAlbumID);
@@ -136,10 +145,10 @@
 		<link rel="stylesheet" href="./css/layout.css">
 		<link rel="stylesheet" href="/css/loading.css">
 		<style>
-			#create-album {
-				color: white !important;
-				text-decoration: underline;
-			}
+		#create-album {
+			color: white !important;
+			text-decoration: underline;
+		}
 		</style>
 		<title>Create Album</title>
 	</head>
@@ -166,27 +175,34 @@
 						<div class="form-group col-12 col-sm-6">
 							<label for="title">Title</label>
 							<h4 class="invalid-feedback d-block"><?php if(isset($titleErr)) echo $titleErr;?></h4>
-							<input class="form-control" type="text" name="title" required placeholder="What was the event?">
+							<input class="form-control" type="text" name="title" required
+								placeholder="What was the event?">
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="eventDate">Event Date</label>
-							<h4 class="invalid-feedback d-block"><?php if(isset($eventDateErr)) echo $eventDateErr;?></h4>
+							<h4 class="invalid-feedback d-block"><?php if(isset($eventDateErr)) echo $eventDateErr;?>
+							</h4>
 							<input class="form-control" type="date" name="eventDate" required>
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="location">Location</label>
 							<h4 class="invalid-feedback d-block"><?php if(isset($locationErr)) echo $locationErr;?></h4>
-							<input class="form-control" type="text" name="location" required placeholder="Where was the it?">
+							<input class="form-control" type="text" name="location" required
+								placeholder="Where was the it?">
 						</div>
 						<div class="form-group col-12 col-sm-6">
 							<label for="participants">Participants</label>
-							<h4 class="invalid-feedback d-block"><?php if(isset($participantsErr)) echo $participantsErr;?></h4>
-							<input class="form-control" type="text" name="participants" required placeholder="Who was there?">
+							<h4 class="invalid-feedback d-block">
+								<?php if(isset($participantsErr)) echo $participantsErr;?></h4>
+							<input class="form-control" type="text" name="participants" required
+								placeholder="Who was there?">
 						</div>
 						<div class="form-group col-12">
 							<label for="description">Description</label>
-							<h4 class="invalid-feedback d-block"><?php if(isset($descriptionErr)) echo $descriptionErr;?></h4>
-							<textarea class="form-control" name="description" required placeholder="What happened?"></textarea>
+							<h4 class="invalid-feedback d-block">
+								<?php if(isset($descriptionErr)) echo $descriptionErr;?></h4>
+							<textarea class="form-control" name="description" required
+								placeholder="What happened?"></textarea>
 						</div>
 						<div class="form-group col-12">
 							<button type="submit" name="submit" class="btn btn-info float-right">Submit</button>
@@ -197,8 +213,8 @@
 		</div>
 		<div id="loader-background"></div>
 		<div id="loader">
-			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg"/>
-			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg"/>
+			<img id="loader-sword" class="loader-icon animated slow" src="/images/sword.svg" />
+			<img id="loader-code" class="loader-icon animated slow" src="/images/html-coding.svg" />
 			<h2 id="loader-message">Loading...</h2>
 		</div>
 

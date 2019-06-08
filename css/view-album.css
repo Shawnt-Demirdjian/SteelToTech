@@ -3,6 +3,10 @@
 	width: auto;
 }
 
+.album-picture-link:hover {
+	text-decoration: none;
+}
+
 .album-video {
 	max-height: 15em;
 	width: auto;

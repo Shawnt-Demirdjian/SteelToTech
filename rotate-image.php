@@ -38,18 +38,24 @@ $angle *= -1;
 // All is well, parameters are valid
 
 // Load the image
-$OriginalSource = imagecreatefromjpeg("./media/".$filename);
-$thumbSource = imagecreatefromjpeg("./thumbnails/".$filename);
+$OriginalSource = imagecreatefromjpeg("./media/source/".$filename);
+$smallSource = imagecreatefromjpeg("./media/small/".$filename);
+$mediumSource = imagecreatefromjpeg("./media/medium/".$filename);
+$largeSource = imagecreatefromjpeg("./media/large/".$filename);
 
 // Rotate the image
 $OriginalRotate = imagerotate($OriginalSource, $angle, 0);
-$thumbRotate = imagerotate($thumbSource, $angle, 0);
+$smallRotate = imagerotate($smallSource, $angle, 0);
+$mediumRotate = imagerotate($mediumSource, $angle, 0);
+$largeRotate = imagerotate($largeSource, $angle, 0);
 
 // Overwrite old image
-$result = imagejpeg($OriginalRotate, "media/".$filename , 100);
-$thumbResult = imagejpeg($thumbRotate, "thumbnails/".$filename , 100);
+$result = imagejpeg($OriginalRotate, "media/source/".$filename , 100);
+$smallResult = imagejpeg($smallRotate, "media/small/".$filename , 100);
+$mediumResult = imagejpeg($mediumRotate, "media/medium/".$filename , 100);
+$largeResult = imagejpeg($largeRotate, "media/large/".$filename , 100);
 
-if($result && $thumbResult){
+if($result && $smallResult && $mediumResult && $largeResult){
 	http_response_code(200);
 	echo json_encode(["message" => "Image successfully rotated."]);
 }else{
