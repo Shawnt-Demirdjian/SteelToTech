@@ -18,7 +18,7 @@
 	}
 
 	// Get 10 most recent albums
-	$res = $link->query("SELECT id, title, location, eventDate FROM albums ORDER BY eventDate DESC LIMIT 10");
+	$res = $link->query("SELECT id, title, location, eventDate, description FROM albums ORDER BY eventDate DESC LIMIT 10");
 
 ?>
 <!DOCTYPE html>
@@ -33,47 +33,54 @@
 		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Forum" rel="stylesheet">
 		<link rel="stylesheet" href="./css/layout.css">
-		<link rel="stylesheet" href="./css/search.css">
+		<link rel="stylesheet" href="./css/albums.css">
 		<style>
-		#search {
+		#albums {
 			color: white !important;
 			text-decoration: underline;
 		}
 		</style>
-		<title>Search</title>
+		<title>Albums</title>
 	</head>
 
 	<body>
 		<?php require 'includes/header.php';?>
 		<div class="singlePageContainer">
-			<h1 class="text-center mt-4">Search</h1>
+			<h1 class="text-center mt-4">Albums</h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto mb-5 bg-light">
-			<div class="container-fluid d-flex" id="results">
+			<div class="container-fluid mb-5">
 				<?php
-			// Display 10 most recent albums
-			$curr;
-			for($i=$res->num_rows; $i>0; $i--){
-				$curr = $res->fetch_assoc();
-				$thumbName = $link->query("SELECT name from media WHERE parent={$curr['id']} ORDER BY uploadDate DESC LIMIT 1");
-				$thumbName = $thumbName->fetch_assoc();
-				echo
-				'<div class="">
-					<a class="card-link" href="/view-album/'.$curr["id"].'">
-					<div class="card m-4">
-						<div class="card-image-container">
-							<img class="card-img" data-src="/media/medium/'.$thumbName["name"].'">
-						</div>
-						<div class="card-body">
-							<h3 class="card-title">'.$curr["title"].'</h3>
-							<h5 class="card-subtitle">'.$curr["location"].'</h5>
-							<h5 class="card-subtitle">'.date("F jS, Y", strtotime($curr["eventDate"])).'</h5>
-						</div>
-					</div></a>
-				</div>';
-			}
+					// Display 10 most recent albums
+					$curr;
+					for($i=$res->num_rows; $i>0; $i--){
+						$curr = $res->fetch_assoc();
+						$image = $link->query("SELECT name from media WHERE parent={$curr['id']} ORDER BY uploadDate DESC LIMIT 1");
+						$image = $image->fetch_assoc();
+						echo
+						"<a class='row album-row' href='/view-album/{$curr['id']}'>
+							<div class='col-12 col-md album-col'>
+								<picture class='album-img'>
+									<source srcset='/media/medium/{$image['name']}' media='(max-width: 576px)'>
+									<img class='album-img' src='/media/small/{$image['name']}'>
+								</picture>
+							</div>
+							<div class='col-12 col-md album-col'>
+								<h2>{$curr['title']}</h2>
+							</div>
+							<div class='col-6 col-md album-col'>
+								<h4 class='ml-0 ml-sm-auto ml-md-0'>".date('F jS, Y', strtotime($curr['eventDate']))."</h4>
+							</div>
+							<div class='col-6 col-md album-col'>
+								<h4 class='mr-0 mr-sm-auto mr-md-0'>{$curr['location']}</h4></h4>
+							</div>
+							<div class='col-12 col-md album-col'>
+								<h5>{$curr['description']}</h5>
+							</div>
+						</a>";
+					}
 
-			$link->close();
-			?>
+					$link->close();
+				?>
 			</div>
 		</div>
 		<?php require 'includes/footer.php';?>
@@ -84,7 +91,7 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
 		</script>
-		<script src="/js/search.js"></script>
+		<script src="/js/albums.js"></script>
 	</body>
 
 </html>

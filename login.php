@@ -59,7 +59,7 @@
 					$_SESSION['email'] = $row['email'];
 					$_SESSION['first'] = $row['first'];
 					$_SESSION['last'] = $row['last'];
-					header('Location: /search');
+					header('Location: /albums');
 					$link->close();
 					die();
 				}else{

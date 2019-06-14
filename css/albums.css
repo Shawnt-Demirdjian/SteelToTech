@@ -1,0 +1,67 @@
+.album-row {
+	background-color: white;
+	margin: 0 auto;
+	padding: 0.3em 0;
+	color: #272727;
+
+	max-width: 90vw;
+	min-height: 8em;
+
+	align-items: center;
+	justify-content: center;
+}
+
+@media(max-width: 530px) {
+	.album-img {
+		height: auto !important;
+		width: 75% !important;
+	}
+}
+
+.album-row:hover {
+	background-color: rgb(255, 237, 117);
+	cursor: pointer;
+
+	color: #272727;
+	text-decoration: none;
+}
+
+.album-row:nth-child(even) {
+	border-top: #272727 solid 0.1em;
+	border-bottom: #272727 solid 0.1em;
+}
+
+.album-row:first-child {
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+}
+
+.album-row:last-child {
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+}
+
+.album-img {
+	height: 100%;
+	width: auto;
+
+	min-width: 0;
+	min-width: 0;
+}
+
+.album-col {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+	height: 100%;
+}
+
+.album-col-bordered {
+	border: 0em;
+	border-color: #272727;
+	border-style: solid;
+	border-left-width: 0.1em;
+	border-right-width: 0.1em;
+}

@@ -24,7 +24,7 @@
 
 			<div class="d-flex justify-content-center my-4">
 				<?php if(isset($_SESSION['userID']) && $_SESSION['userID'] > 0):?>
-				<a href="/search" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>
+				<a href="/albums" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>
 				<?php else: ?>
 				<a href="/login" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>
 				<?php endif; ?>

@@ -99,7 +99,7 @@
 			// delete album and cascades to all media. 
 			$res = $link->query("DELETE FROM albums WHERE id=".$albumID."");
 			if($res){
-				header('Location: /search');
+				header('Location: /albums');
 				$link->close();
 				die();
 			}
