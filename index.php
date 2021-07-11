@@ -17,7 +17,7 @@
 		<title>Demirdjian Family Home</title>
 	</head>
 
-	<body class="container">
+	<body class="container-fluid">
 		<div class="singlePageContainer">
 			<h1 class="header-font text-center mt-5"><a href="/" class=" home-link">Demirdjian Family Home</a></h1>
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light">
@@ -28,8 +28,7 @@
 				<?php else: ?>
 				<a href="/login" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1">Albums</a>
 				<?php endif; ?>
-				<a href="https://steeltotech.com:2096" target="_blank" rel="noopener noreferrer"
-					class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Webmail</a>
+				<a href="https://recipes.steeltotech.com" class="btn btn-info col-3 col-sm-3 col-md-2 col-lg-1 ml-4">Recipes</a>
 			</div>
 
 			<hr class="col-3 col-sm-3 col-md-2 col-lg-1 mx-auto bg-light mt-4">
